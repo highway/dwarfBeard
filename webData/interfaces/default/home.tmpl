@@ -1,0 +1,35 @@
+#import dwarfBeard
+#import datetime
+
+#from dwarfBeard import db
+
+#set global $title="Home"
+#set global $header="Hello World, this is dwarfBeard"
+
+#set global $sitePath = ".."
+#set $today = str($datetime.date.today())
+#set global $topmenu="home"#
+#import os.path
+
+
+<html>
+    <body>
+		<form id="configForm" action="runTasks" method="post">
+
+					<div id="config-components">
+
+						<div id="core-component-group1" class="component-group clearfix">
+
+							<fieldset class="component-group-list">
+								
+								<input type="submit" class="btn config_submitter" value="Run Tasks" />
+								
+							</fieldset>
+						</div><!-- /component-group1 //-->
+
+					</div><!-- /config-components -->
+
+		</form>
+    </body>
+</html>
+
