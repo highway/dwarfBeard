@@ -20,18 +20,21 @@ from random import randint
 
 
 #this function will return a array of tasks info in order of priority
-def getTaskPriorityArray():
-	#add the task info in order of priority
-	taskArray = [
-		{'taskName':'Gather Ore and Wood', 'taskLevel':'7'},
-		{'taskName':'Gather Ore and Wood', 'taskLevel':'1'},
-		{'taskName':'Hire an additional Carver', 'taskLevel':'2'}
-		]
+def getTaskPriorityArray(characterName):
+
+	#make connection to db
+	mainDB = DBConnection(dwarfBeard.DB_FILE)
+	
+	#make a tuple of the character name
+	cName = (characterName,)
+	
+	#create an array with the task info from the db
+	taskArray = mydb.action("SELECT * FROM tasks WHERE characterName=?", cName).fetchall()
 	
 	return taskArray
 		
 
-def startNewArtificingTasks(browser):
+def startNewArtificingTasks(browser, characterName):
 	
 	#this task should begin a new task and then return True if it succeeded
 	time.sleep(4)
@@ -61,7 +64,7 @@ def startNewArtificingTasks(browser):
 		time.sleep(x)
 	
 	#get the task priority list first
-	taskPriorityArray = getTaskPriorityArray()
+	taskPriorityArray = getTaskPriorityArray(characterName)
 	
 	#start with the first task
 	taskPrioritIndex = 0

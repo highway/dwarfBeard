@@ -92,7 +92,7 @@ def openToProfessions(browser):
 
 
 	
-def startNewTasksManager(browser):
+def startNewTasksManager(browser, characterName):
 	
 	#here we need to look for available task slots then call to start a new task in the order of priority
 	###########################################
@@ -119,7 +119,7 @@ def startNewTasksManager(browser):
 		if eachButton == 'Choose Task':
 			print '  empty task found'
 			print '  attempting to start new artificing task'
-			if artificingControl.startNewArtificingTasks(browser):
+			if artificingControl.startNewArtificingTasks(browser, characterName):
 				print '  new artificing task started'
 	
 	return
@@ -244,7 +244,7 @@ def runTaskManagment(browser, characterName):
 	
 	#start new tasks if possible
 	print 'running startNewTasksManager'
-	startNewTasksManager(browser)
+	startNewTasksManager(browser, characterName)
 	
 	return
 	

@@ -46,9 +46,16 @@ from dwarfBeard.general import TaskTimer
 
 def executeTaskActionList(timer):
 
-	#for now, until the web management interface is ready we will hard code the character list
-	#add your character names here using list syntax ie. ['myName1', 'myName2', 'myName3']
-	characterList = ['Quarfein']
+	#get a connection to the db
+	mainDB = DBConnection(dwarfBeard.DB_FILE)
+	
+	#get character names from the db
+	cnDict = mainDB.action('SELECT * FROM characterNames')
+	
+	#put the character names into a list
+	characterList = []
+	for row in cnDict:
+		characterList.append(str(row['characterName']))
 	
 	#open a browser
 	print 'running openAbrowser'

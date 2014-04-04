@@ -102,6 +102,7 @@ def initialize():
 			print "Unable to find '" + CONFIG_FILE + "', all settings will be default!"
 			save_config()
 			
+		
 		__INITIALIZED__ = True
 		return True
 		
