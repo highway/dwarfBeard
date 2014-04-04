@@ -31,6 +31,18 @@ def getTaskPriorityArray(characterName):
 	#create an array with the task info from the db
 	taskArray = mydb.action("SELECT * FROM tasks WHERE characterName=?", cName).fetchall()
 	
+	'''
+	#this is the old manual way. comment out the above to use this
+	#add the task info in order of priority
+	taskArray = [
+		{'taskName':'Deep Wilderness Gathering', 'taskLevel':'14'},
+		{'taskName':'Upgrade Engraver', 'taskLevel':'13'},
+		{'taskName':'Upgrade Carver', 'taskLevel':'6'},
+		{'taskName':'Hire an additional Carver', 'taskLevel':'2'}
+		]
+	
+	'''
+	
 	return taskArray
 		
 
