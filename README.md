@@ -39,9 +39,9 @@ Fill in the following info into your new config.ini before attempting to start r
  
  
 !!! I am in the middle of implementing the web interface and database.
-If you want to use the current version you will have to manually create lists in place of the database transactions.
-Character names are pulled at the top of dwarfBeard.py.
-To change your task priority enter the task name and rank in the list at the top of artificingControl.py.
+-If you want to use the current version you will have to manually create lists in place of the database transactions.
+-Character names are pulled at the top of dwarfBeard.py.
+-To change your task priority enter the task name and rank in the list at the top of artificingControl.py.
 
 Currently only Artificing tasks are supported and this is soon to change.
 
