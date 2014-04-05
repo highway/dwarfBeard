@@ -56,6 +56,7 @@
                     </div>
 
                     <fieldset class="component-group-list">
+					
                         <div class="field-pair">
                             <input type="checkbox" name="launch_browser" id="launch_browser" #if $dwarfBeard.LAUNCH_BROWSER then "checked=\"checked\"" else ""#/>
                             <label class="clearfix" for="launch_browser">
@@ -64,14 +65,6 @@
                             </label>
                         </div>
 						
-						<input type="submit" class="btn config_submitter" value="Save Changes" />
-                    </fieldset>
-                </div><!-- /component-group1 //-->
-				
-				<div id="core-component-group2" class="component-group clearfix">
-
-					<fieldset class="component-group-list">
-				
 						<div class="field-pair">
                             <label class="nocheck clearfix">
                                 <span class="component-title">HTTP Port</span>
@@ -79,7 +72,7 @@
                             </label>
                             <label class="nocheck clearfix">
                                 <span class="component-title">&nbsp;</span>
-                                <span class="component-desc">Web port that dwarfBeard should listen on (eg. 8081)</span>
+                                <span class="component-desc">Web port that dwarfBeard should listen on (eg. 8083)</span>
                             </label>
                         </div>
 
@@ -105,6 +98,61 @@
                             </label>
                         </div>
 						
+						</br>
+						<input type="submit" class="btn config_submitter" value="Save Changes" />
+                    </fieldset>
+                </div><!-- /component-group1 //-->
+				
+				<div id="core-component-group2" class="component-group clearfix">
+
+					<fieldset class="component-group-list">
+				
+						<div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">FireFox Profile Path</span>
+                                <input type="text" name="ff_profile_path" value="$dwarfBeard.FF_PROFILE_PATH" size="100" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Full path of profile to use for FireFox</span>
+                            </label>
+                        </div>
+						</br>
+
+                        <div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">Neverwinter Username</span>
+                                <input type="text" name="nw_user_name" value="$dwarfBeard.NW_USER_NAME" size="35" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Username for authentication</span>
+                            </label>
+                        </div>
+
+                        <div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">Neverwinter Password</span>
+                                <input type="password" name="nw_password" value="$dwarfBeard.NW_PASSWORD" size="35" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Password for authentication</span>
+                            </label>
+                        </div>
+						
+						<div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">Neverwinter Account Name</span>
+                                <input type="text" name="nw_account_name" value="$dwarfBeard.NW_ACCOUNT_NAME" size="35" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">You can see this once logged into the site: characterName@accountName</span>
+                            </label>
+                        </div>
+						
+						</br>
 						<input type="submit" class="btn config_submitter" value="Save Changes" />
                     </fieldset>
                 </div><!-- /component-group2 //-->

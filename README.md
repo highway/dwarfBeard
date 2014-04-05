@@ -1,17 +1,20 @@
 dwarfBeard
 ==========
 
-A Neverwinter MMO professions manager web app with some possible additional features
+A Neverwinter MMO professions manager web app with some additional features
 
 dwarfBeard is currently an alpha release. There may be severe bugs in it and at any given time it may not work at all. 
 Currently it is only setup to manage Artificing tasks. But it does support multiple characters.
 
-## Future Project Goals
+## Project Goals
 
-* Web interface for management of app settings using cherrypy and cheetah
+* Web interface for management of app settings
 * Will manage any of the professions available
-* Profession and task prioritization 
-* Support for multiple browsers
+* Multiple character support
+* Profession and task prioritization including rare tasks
+* AD Exchange price trending
+* Daily SCA reward collection
+* and much more!
 
 
 ## Dependencies
@@ -26,7 +29,7 @@ To run from source you will need:
 ## Setup
 
 During the first run a config.ini file will be created in your dwarfBeard directory.
-Fill in the following info into your new config.ini before attempting to start run the tasks (if you don't it's not a big deal, you just wont get very far):
+Before running the tasks you will need to visit the configuration page as set up the following at a minimum:
 
 * ff_profile_path = "C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\9g8jzsay.default"
  - set this to your user profile
@@ -37,15 +40,9 @@ Fill in the following info into your new config.ini before attempting to start r
 * nw_account_name = ""
  - this is the account name you see once logged into the site: characterName@accountName
  
+Your account information is stored on your local computer in the config.ini file.
+
  
-!!! I am in the middle of implementing the web interface and database.
--If you want to use the current version you will have to manually create lists in place of the database transactions.
--Character names are pulled at the top of dwarfBeard.py.
--To change your task priority enter the task name and rank in the list at the top of artificingControl.py.
-
-Currently only Artificing tasks are supported and this is soon to change.
-
-
 ## Bugs
 
 If you find a bug please report it or it'll never get fixed. Verify that it hasn't [already been submitted][issues] and then log a new bug. Be sure to provide as much information as possible.
