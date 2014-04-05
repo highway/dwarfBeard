@@ -43,11 +43,55 @@
     <body>
 	<div id="manage">
 	<div id="manage-content">
+	
+		<div class="component-group-desc">
+			<h3>Character Management</h3>
+			<p>Lots to do here</p>
+			<p><b>......</b></p>
+		</div>
+	
+		<div id="core-component-group1" class="component-group clearfix">
+		
+				<form id="configForm" action="addNewCharacter" method="post">
+					<label class="clearfix" for="task_Name">
+						<span class="component-desc">Enter a name to add: </span>
+						<input type="text" name="character_Name" value="" size="50" />
+					</label>
+				
+					<input type="submit" class="btn config_submitter" value="Add To List" />
+				</form>
+				
+				<form id="configForm" action="deleteCharacter" method="post">
+					<label class="clearfix" for="task_Name">
+						<span class="component-desc">Enter a name to delete: </span>
+						<input type="text" name="character_Name" value="" size="50" />
+					</label>
+				
+					<input type="submit" class="btn config_submitter" value="Delete From List" />
+				</form>
+				
+		</div><!-- /component-group1 //-->
+		
+		
+		<div id="core-component-group1" class="component-group clearfix">
+			<fieldset class="component-group-list">
+				<div class="component-group-desc">
+					<p>Character List:</p>
+				</div>
+				#for $cur_result in $characterResults:
+				
+					$cur_result["characterName"], 
+					
+				#end for
+			</fieldset>
+		</div><!-- /component-group1 //-->
+		</br>
+	
 		<form id="configForm" action="addNewTask" method="post">
 		
 			<div id="manage-components">
 				<div class="component-group-desc">
-					<h3>Character Management</h3>
+					<h3>Task Management</h3>
 					<p>Lots to do here</p>
 					<p><b>......</b></p>
 				</div>
@@ -93,7 +137,7 @@
 		</form>
 		</br>
 		
-		<form id="configForm" action="saveConfig" method="post">	
+			
 			<div id="manage-components">
 				#for $cur_result in $taskResults:
 					
@@ -103,57 +147,18 @@
 							<div class="field-pair">
 								<input type="checkbox" name="isArtificing" id="isArtificing" #if int($cur_result["isArtificing"]) then "checked=\"checked\"" else ""#/>
 								<label class="clearfix" for="launch_browser">
-									<span class="component-title">Launch Browser</span>
-									<span class="component-desc">Should dwarfBeard open its home page when started?</span>
-									<input type="text" name="taskName" value=str($cur_result["taskName"]) size="35" />
+									<h3>Task Name: $cur_result["taskName"]</h3>
+									<p>Task Level: $cur_result["taskLevel"]</p>
+									<p>Character: $cur_result["characterName"]</p>
 								</label>
 							</div>
-							
-							<input type="submit" class="btn config_submitter" value="Save Changes" />
 						</fieldset>
 					</div><!-- /component-group1 //-->
 					
 				#end for
 
-				<div id="core-component-group2" class="component-group clearfix">
-
-					<fieldset class="component-group-list">
-				
-						
-                        <div class="field-pair">
-                            <label class="nocheck clearfix">
-                                <span class="component-title">HTTP Username</span>
-                                <input type="text" name="web_username" value="$dwarfBeard.WEB_USERNAME" size="35" />
-                            </label>
-                            <label class="nocheck clearfix">
-                                <span class="component-title">&nbsp;</span>
-                                <span class="component-desc">Username for authentication (blank for none)</span>
-                            </label>
-                        </div>
-
-                        <div class="field-pair">
-                            <label class="nocheck clearfix">
-                                <span class="component-title">HTTP Password</span>
-                                <input type="password" name="web_password" value="$dwarfBeard.WEB_PASSWORD" size="35" />
-                            </label>
-                            <label class="nocheck clearfix">
-                                <span class="component-title">&nbsp;</span>
-                                <span class="component-desc">Password for authentication (blank for none)</span>
-                            </label>
-                        </div>
-						
-						<input type="submit" class="btn manage_submitter" value="Save Changes" />
-                    </fieldset>
-                </div><!-- /component-group2 //-->
-				<br />
-				<br />
-				<div class="component-group-save">
-                    <input type="submit" class="btn manage_submitter" value="Save Changes" />
-                </div><br />
-				
 			</div><!-- /manage-components -->	
 
-		</form>
 	</div>
 	</div>
     </body>

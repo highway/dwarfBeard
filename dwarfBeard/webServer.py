@@ -129,9 +129,9 @@ class Manage:
 					is_Weaponsmithing=None, is_Mailsmithing=None, is_Artificing=None, is_Tailoring=None, 
 					is_Leadership=None, is_Leatherworking=None):
 		
-		if is_Alchemy == "on":
-			is_Alchemy = 1
-		else:
+		if is_Alchemy == "on": 
+			is_Alchemy = 1 
+		else: 
 			is_Alchemy = 0
 			
 		if is_Platesmithing == "on":
@@ -177,6 +177,19 @@ class Manage:
 		
 		redirect("/manage/")
 		
+	@cherrypy.expose
+	def addNewCharacter(self, character_Name=None):
+		myDB = DBConnection(dwarfBeard.DB_FILE)
+		queryString = "INSERT INTO characterNames (characterName) VALUES (?)"
+		myDB.action(queryString,(character_Name,))
+		redirect("/manage/")
+		
+	@cherrypy.expose
+	def deleteCharacter(self, character_Name=None):
+		myDB = DBConnection(dwarfBeard.DB_FILE)
+		queryString = "DELETE FROM characterNames WHERE characterName=?"
+		myDB.action(queryString,(character_Name,))
+		redirect("/manage/")
 		
 	
 class Config:
