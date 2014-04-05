@@ -124,6 +124,59 @@ class Manage:
 		return _munge(t)
 		
 		
+	@cherrypy.expose
+	def addNewTask(self, character_Name=None, task_Name=None, task_Level=None, is_Alchemy=None, is_Platesmithing=None,
+					is_Weaponsmithing=None, is_Mailsmithing=None, is_Artificing=None, is_Tailoring=None, 
+					is_Leadership=None, is_Leatherworking=None):
+		
+		if is_Alchemy == "on":
+			is_Alchemy = 1
+		else:
+			is_Alchemy = 0
+			
+		if is_Platesmithing == "on":
+			is_Platesmithing = 1
+		else:
+			is_Platesmithing = 0
+			
+		if is_Weaponsmithing == "on":
+			is_Weaponsmithing = 1
+		else:
+			is_Weaponsmithing = 0
+			
+		if is_Mailsmithing == "on":
+			is_Mailsmithing = 1
+		else:
+			is_Mailsmithing = 0
+			
+		if is_Artificing == "on":
+			is_Artificing = 1
+		else:
+			is_Artificing = 0
+			
+		if is_Tailoring == "on":
+			is_Tailoring = 1
+		else:
+			is_Tailoring = 0
+			
+		if is_Leadership == "on":
+			is_Leadership = 1
+		else:
+			is_Leadership = 0
+			
+		if is_Leatherworking == "on":
+			is_Leatherworking = 1
+		else:
+			is_Leatherworking = 0
+		
+		myDB = DBConnection(dwarfBeard.DB_FILE)
+		
+		queryString = "INSERT INTO tasks (characterName, taskName, taskLevel, isAlchemy, isPlatesmithing, isWeaponsmithing, isMailsmithing, isArtificing, isTailoring, isLeadership, isLeatherworking) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+		
+		myDB.action(queryString,(character_Name, task_Name, task_Level, is_Alchemy, is_Platesmithing, is_Weaponsmithing, is_Mailsmithing, is_Artificing, is_Tailoring, is_Leadership, is_Leatherworking))
+		
+		redirect("/manage/")
+		
 		
 	
 class Config:

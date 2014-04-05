@@ -43,7 +43,7 @@
     <body>
 	<div id="manage">
 	<div id="manage-content">
-		<form id="configForm" action="saveConfig" method="post">
+		<form id="configForm" action="addNewTask" method="post">
 		
 			<div id="manage-components">
 				<div class="component-group-desc">
@@ -52,6 +52,49 @@
 					<p><b>......</b></p>
 				</div>
 			
+				<div id="core-component-group1" class="component-group clearfix">
+					<fieldset class="component-group-list">
+						<div class="field-pair">
+							<input type="checkbox" name="is_Alchemy" id="is_Alchemy"/>
+							<span class="component-title">is_Alchemy</span>
+							<input type="checkbox" name="is_Platesmithing" id="is_Platesmithing"/>
+							<span class="component-title">is_Platesmithing</span>
+							<input type="checkbox" name="is_Weaponsmithing" id="is_Weaponsmithing"/>
+							<span class="component-title">is_Weaponsmithing</span>
+							<input type="checkbox" name="is_Mailsmithing" id="is_Mailsmithing"/>
+							<span class="component-title">is_Mailsmithing</span>
+							<input type="checkbox" name="is_Artificing" id="is_Artificing"/>
+							<span class="component-title">is_Artificing</span>
+							<input type="checkbox" name="is_Tailoring" id="is_Tailoring"/>
+							<span class="component-title">is_Tailoring</span>
+							<input type="checkbox" name="is_Leadership" id="is_Leadership"/>
+							<span class="component-title">is_Leadership</span>
+							<input type="checkbox" name="is_Leatherworking" id="is_Leatherworking"/>
+							<span class="component-title">is_Leatherworking</span>
+							</br>
+							<label class="clearfix" for="task_Name">
+								<span class="component-desc">Enter the complete task name here: </span>
+								<input type="text" name="task_Name" value="" size="50" />
+							</label>
+							</br>
+							<label class="clearfix" for="task_Level">
+								<span class="component-desc">Enter the task level here: </span>
+								<input type="text" name="task_Level" value="" size="4" />
+							</label>
+							</br>
+							<span class="component-desc">Enter the complete character name here: </span>
+							<input type="text" name="character_Name" value="" size="50" />
+						</div>
+						
+						<input type="submit" class="btn config_submitter" value="Save Changes" />
+					</fieldset>
+				</div><!-- /component-group1 //-->
+			</div><!-- /manage-components -->
+		</form>
+		</br>
+		
+		<form id="configForm" action="saveConfig" method="post">	
+			<div id="manage-components">
 				#for $cur_result in $taskResults:
 					
 					<div id="core-component-group1" class="component-group clearfix">
@@ -61,7 +104,7 @@
 								<input type="checkbox" name="isArtificing" id="isArtificing" #if int($cur_result["isArtificing"]) then "checked=\"checked\"" else ""#/>
 								<label class="clearfix" for="launch_browser">
 									<span class="component-title">Launch Browser</span>
-									<span class="component-desc">Should Sick Beard open its home page when started?</span>
+									<span class="component-desc">Should dwarfBeard open its home page when started?</span>
 									<input type="text" name="taskName" value=str($cur_result["taskName"]) size="35" />
 								</label>
 							</div>
@@ -108,7 +151,7 @@
                     <input type="submit" class="btn manage_submitter" value="Save Changes" />
                 </div><br />
 				
-			</div><!-- /config-components -->	
+			</div><!-- /manage-components -->	
 
 		</form>
 	</div>
