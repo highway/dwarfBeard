@@ -41,22 +41,78 @@
 
 <html>
     <body>
-		<form id="configForm" action="runTasks" method="post">
+	<div id="manage">
+	<div id="manage-content">
+		<form id="configForm" action="saveConfig" method="post">
+		
+			<div id="manage-components">
+				<div class="component-group-desc">
+					<h3>Character Management</h3>
+					<p>Lots to do here</p>
+					<p><b>......</b></p>
+				</div>
+			
+				#for $cur_result in $taskResults:
+					
+					<div id="core-component-group1" class="component-group clearfix">
 
-					<div id="config-components">
+						<fieldset class="component-group-list">
+							<div class="field-pair">
+								<input type="checkbox" name="isArtificing" id="isArtificing" #if int($cur_result["isArtificing"]) then "checked=\"checked\"" else ""#/>
+								<label class="clearfix" for="launch_browser">
+									<span class="component-title">Launch Browser</span>
+									<span class="component-desc">Should Sick Beard open its home page when started?</span>
+									<input type="text" name="taskName" value=str($cur_result["taskName"]) size="35" />
+								</label>
+							</div>
+							
+							<input type="submit" class="btn config_submitter" value="Save Changes" />
+						</fieldset>
+					</div><!-- /component-group1 //-->
+					
+				#end for
 
-						<div id="core-component-group1" class="component-group clearfix">
+				<div id="core-component-group2" class="component-group clearfix">
 
-							<fieldset class="component-group-list">
-								
-								<input type="submit" class="btn config_submitter" value="Run Tasks" />
-								
-							</fieldset>
-						</div><!-- /component-group1 //-->
+					<fieldset class="component-group-list">
+				
+						
+                        <div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">HTTP Username</span>
+                                <input type="text" name="web_username" value="$dwarfBeard.WEB_USERNAME" size="35" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Username for authentication (blank for none)</span>
+                            </label>
+                        </div>
 
-					</div><!-- /config-components -->
+                        <div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">HTTP Password</span>
+                                <input type="password" name="web_password" value="$dwarfBeard.WEB_PASSWORD" size="35" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Password for authentication (blank for none)</span>
+                            </label>
+                        </div>
+						
+						<input type="submit" class="btn manage_submitter" value="Save Changes" />
+                    </fieldset>
+                </div><!-- /component-group2 //-->
+				<br />
+				<br />
+				<div class="component-group-save">
+                    <input type="submit" class="btn manage_submitter" value="Save Changes" />
+                </div><br />
+				
+			</div><!-- /config-components -->	
 
 		</form>
+	</div>
+	</div>
     </body>
 </html>
 

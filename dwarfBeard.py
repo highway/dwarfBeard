@@ -42,6 +42,7 @@ from dwarfBeard import browserControl
 from dwarfBeard import artificingControl
 from dwarfBeard import professionGeneral
 from dwarfBeard.general import TaskTimer
+from dwarfBeard.db import DBConnection
 
 
 def executeTaskActionList(timer):
@@ -135,6 +136,13 @@ def main():
 	if not os.path.isfile(dwarfBeard.DB_FILE):
 		dbConn = sqlite3.connect(dwarfBeard.DB_FILE)
 		dbConn.close()
+		
+	#init the db if needed
+	myDb = DBConnection(dwarfBeard.DB_FILE)
+	if not myDb.initTest():
+		print 'creating init schema'
+		myDb.createInitialSchema()
+	
 	
 	# Initialize the config and our threads
 	dwarfBeard.initialize()

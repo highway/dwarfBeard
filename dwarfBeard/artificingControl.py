@@ -18,12 +18,14 @@ from splinter import Browser
 import time
 from random import randint
 
+from dwarfBeard.db import DBConnection
+
 
 #this function will return a array of tasks info in order of priority
 def getTaskPriorityArray(characterName):
 
 	#make connection to db
-	mainDB = DBConnection(dwarfBeard.DB_FILE)
+	mydb = DBConnection(dwarfBeard.DB_FILE)
 	
 	#make a tuple of the character name
 	cName = (characterName,)

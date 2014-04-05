@@ -27,6 +27,7 @@ from Cheetah.Template import Template
 import cherrypy.lib
 
 import dwarfBeard
+from dwarfBeard.db import DBConnection
 
 try:
     import json
@@ -112,8 +113,17 @@ class Manage:
 	
 	@cherrypy.expose
 	def index(self):
+	
+		myDB = DBConnection(dwarfBeard.DB_FILE)
+		
 		t = PageTemplate(file="manage.tmpl")
+		
+		t.characterResults = myDB.action('SELECT * FROM characterNames')
+		t.taskResults = myDB.action('SELECT * FROM tasks')
+		
 		return _munge(t)
+		
+		
 		
 	
 class Config:
