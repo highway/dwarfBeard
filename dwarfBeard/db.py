@@ -58,7 +58,7 @@ class DBConnection:
 		with db_lock:
 
 			if query == None:
-			return
+				return
 
 			sqlResult = None
 			attempt = 0
@@ -66,18 +66,18 @@ class DBConnection:
 			while attempt < 5:
 				try:
 					if args == None:
-					sqlResult = self.connection.execute(query)
+						sqlResult = self.connection.execute(query)
 					else:
-					sqlResult = self.connection.execute(query, args)
-					self.connection.commit()
+						sqlResult = self.connection.execute(query, args)
+						self.connection.commit()
 					# get out of the connection attempt loop since we were successful
 					break
 				except sqlite3.OperationalError, e:
 					if "unable to open database file" in e.args[0] or "database is locked" in e.args[0]:
-					attempt += 1
-					time.sleep(1)
+						attempt += 1
+						time.sleep(1)
 					else:
-					raise
+						raise
 				except sqlite3.DatabaseError, e:
 					raise
 

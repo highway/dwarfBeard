@@ -1,0 +1,123 @@
+#import dwarfBeard
+#import datetime
+
+#from dwarfBeard import db
+
+#set global $title="Config"
+#set global $header="Hello World, this is dwarfBeard"
+
+#set global $sitePath = ".."
+#set $today = str($datetime.date.today())
+#set global $topmenu="home"#
+#import os.path
+
+<header>
+
+#if $varExists('siteMenu'):
+    <div id="SubMenu">
+        <span>
+    #set $first = True
+    #for $menuItem in $siteMenu:
+        #if 'requires' not in $menuItem or $menuItem.requires():
+            #if type($menuItem.path) == dict:
+                #if $first then "" else "</span>| <span>"#<b>$menuItem.title</b>
+                #set $first = False
+                #set $inner_first = True
+                #for $cur_link in $menuItem.path:
+                    #if $inner_first then "" else "&middot; "#<a class="inner" href="$siteRoot/$menuItem.path[$cur_link]">$cur_link</a>
+                    #set $inner_first = False
+                #end for
+            #else
+                #if $first then "" else "| "#<a href="$siteRoot/$menuItem.path" #if 'confirm' in $menuItem then "class=\"confirm\"" else "" #>$menuItem.title</a>
+                #set $first = False
+            #end if
+        #end if
+    #end for
+        </span>
+    </div>
+#end if
+
+</header>
+
+<html>
+    <body>
+	<div id="config">
+	<div id="config-content">
+		<form id="configForm" action="saveConfig" method="post">
+		
+			<div id="config-components">
+
+                <div id="core-component-group1" class="component-group clearfix">
+
+                    <div class="component-group-desc">
+                        <h3>Misc</h3>
+                        <p>Startup options.</p>
+                        <p><b>Some options may require a manual restart to take effect.</b></p>
+                    </div>
+
+                    <fieldset class="component-group-list">
+                        <div class="field-pair">
+                            <input type="checkbox" name="launch_browser" id="launch_browser" #if $dwarfBeard.LAUNCH_BROWSER then "checked=\"checked\"" else ""#/>
+                            <label class="clearfix" for="launch_browser">
+                                <span class="component-title">Launch Browser</span>
+                                <span class="component-desc">Should Sick Beard open its home page when started?</span>
+                            </label>
+                        </div>
+						
+						<input type="submit" class="btn config_submitter" value="Save Changes" />
+                    </fieldset>
+                </div><!-- /component-group1 //-->
+				
+				<div id="core-component-group2" class="component-group clearfix">
+
+					<fieldset class="component-group-list">
+				
+						<div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">HTTP Port</span>
+                                <input type="text" name="web_port" value="$dwarfBeard.WEB_PORT" size="10" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Web port that Sick Beard should listen on (eg. 8081)</span>
+                            </label>
+                        </div>
+
+                        <div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">HTTP Username</span>
+                                <input type="text" name="web_username" value="$dwarfBeard.WEB_USERNAME" size="35" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Username for authentication (blank for none)</span>
+                            </label>
+                        </div>
+
+                        <div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">HTTP Password</span>
+                                <input type="password" name="web_password" value="$dwarfBeard.WEB_PASSWORD" size="35" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">Password for authentication (blank for none)</span>
+                            </label>
+                        </div>
+						
+						<input type="submit" class="btn config_submitter" value="Save Changes" />
+                    </fieldset>
+                </div><!-- /component-group2 //-->
+				
+				<div class="component-group-save">
+                    <input type="submit" class="btn config_submitter" value="Save Changes" />
+                </div><br />
+				
+			</div><!-- /config-components -->	
+
+		</form>
+	</div>
+	</div>
+    </body>
+</html>
+

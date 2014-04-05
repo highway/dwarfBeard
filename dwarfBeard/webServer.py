@@ -60,7 +60,13 @@ class PageTemplate (Template):
 		logPageTitle = 'Logs &amp; Errors'
 		self.logPageTitle = logPageTitle
 		self.sitePID = str(dwarfBeard.PID)
+		self.siteMenu = [
+			{ 'title': 'Home',            'path': 'home/'           },
+			{ 'title': 'Manage',          'path': 'manage/'         },
+			{ 'title': 'Config',          'path': 'config/'         },
+			]
 
+			
 
 def redirect(abspath, *args, **KWs):
     assert abspath[0] == '/'
@@ -71,6 +77,7 @@ def _munge(string):
     return unicode(string).encode('utf-8', 'xmlcharrefreplace')
 
 
+	
 class Home:
 
 	@cherrypy.expose
@@ -101,6 +108,47 @@ class Home:
 		redirect("/home/")
 		
 
+class Manage:
+	
+	@cherrypy.expose
+	def index(self):
+		t = PageTemplate(file="manage.tmpl")
+		return _munge(t)
+		
+	
+class Config:
+
+	@cherrypy.expose
+	def index(self):
+		t = PageTemplate(file="config.tmpl")
+		return _munge(t)
+		
+	@cherrypy.expose
+	def saveGeneral(self, log_dir=None, web_port=None, web_log=None, web_ipv6=None,
+					launch_browser=None, web_username=None, web_password=None, version_notify=None):
+					
+		if launch_browser == "on":
+			launch_browser = 1
+		else:
+			launch_browser = 0
+			
+		if version_notify == "on":
+			version_notify = 1
+		else:
+			version_notify = 0
+			
+		dwarfBeard.LAUNCH_BROWSER = launch_browser
+
+		dwarfBeard.WEB_PORT = int(web_port)
+		dwarfBeard.WEB_IPV6 = web_ipv6
+		dwarfBeard.WEB_USERNAME = web_username
+		dwarfBeard.WEB_PASSWORD = web_password
+		
+		dwarfBeard.save_config()
+		
+		redirect("/config/")
+					
+	
 
 class WebInterface:
 
@@ -115,5 +163,6 @@ class WebInterface:
 		redirect("/home/")
 		
 	home = Home()
-	
+	manage = Manage()
+	config = Config()
 	
