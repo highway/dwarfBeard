@@ -37,38 +37,22 @@ def getTaskPriorityArray(characterName):
 	return taskArray
 		
 
-def startNewArtificingTasks(browser, characterName, taskPriorityArray):
+def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 	
 	#this task should begin a new task and then return True if it succeeded
 	time.sleep(4)
 	
-	###########################################
-	#wait for the page to load
-	#look the artificing button  
-	while browser.is_element_not_present_by_css('a.tab.subNav.professions-Artificing.Artificing'):
-		x = randint(5,10)
-		print '  cannot find artificing tab', x, 's'
-		time.sleep(x)
-		
-		
-	###########################################
-	#wait for the page to load
-	while browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found'):
-		browser.find_by_css('a.tab.subNav.professions-Artificing.Artificing').first.click()
-		x = randint(5,10)
-		print '  trying to navagate to artificing tasks', x, 's'
-		time.sleep(x)
-	
-	###########################################
-	#wait for the page to load
-	while browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found'):
-		x = randint(5,8)
-		print '  waiting for artificing tasks to load', x, 's'
-		time.sleep(x)
-	
 	#start with the first task
 	taskPrioritIndex = 0
 	
+	###########################################
+	#wait for the page to load
+	while browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found'):
+		x = randint(5,9)
+		#go to professions
+		print '  attempting to navagate to professions overview'
+		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions-tasks/' + taskPriorityArray[taskPrioritIndex]['taskProfession'])
+		time.sleep(x)
 	
 	print '  begining search for the task'
 	#here we search through the task list for what we want

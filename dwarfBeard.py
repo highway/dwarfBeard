@@ -47,6 +47,9 @@ from dwarfBeard.db import DBConnection
 
 def executeTaskActionList(timer):
 
+	#signal the task is in execution
+	dwarfBeard.taskExecRunning = 1
+	
 	#get a connection to the db
 	mainDB = DBConnection(dwarfBeard.DB_FILE)
 	
@@ -89,6 +92,9 @@ def executeTaskActionList(timer):
 	
 	#set the timer interval to the logoutTime
 	timer.interval = logoutTime
+	
+	#signal the task is finished
+	dwarfBeard.taskExecRunning = 0
 	
 	return 
 	
@@ -185,7 +191,8 @@ def main():
 		if dwarfBeard.runTasks:
 			if not taskActionTimer.running:
 				print 'starting timer'
-				taskActionTimer.interval = 0.05
+				#set a default interval. this will be reset by the log out function
+				taskActionTimer.interval = 1400
 				taskActionTimer.start()
 		else:
 			if taskActionTimer.running:

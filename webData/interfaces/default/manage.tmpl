@@ -112,7 +112,7 @@
 							</select>
 							</br>
 							Select Profession Type
-							<select name="prof_Select">
+							<select name="task_Profession">
 								<option value="Alchemy">Alchemy</option>
 								<option value="Platesmithing">Platesmithing</option>
 								<option value="Weaponsmithing">Weaponsmithing</option>
@@ -156,16 +156,7 @@
 									<input type="hidden" name="task_Name" value="$cur_result["taskName"]" />
 									<input type="hidden" name="task_Level" value="$cur_result["taskLevel"]" />
 									<input type="hidden" name="character_Name" value="$cur_result["characterName"]" />
-									<p class="floatAlignLeft">
-										#if int($cur_result["isAlchemy"]) then '<span class="component-title"><h3>Alchemy</h3></span>' else ""#
-										#if int($cur_result["isPlatesmithing"]) then '<span class="component-title"><h3>Platesmithing</h3></span>' else ""#
-										#if int($cur_result["isWeaponsmithing"]) then '<span class="component-title"><h3>Weaponsmithing</h3></span>' else ""#
-										#if int($cur_result["isMailsmithing"]) then '<span class="component-title"><h3>Mailsmithing</h3></span>' else ""#
-										#if int($cur_result["isArtificing"]) then '<span class="component-title"><h3>Artificing</h3></span>' else ""#
-										#if int($cur_result["isTailoring"]) then '<span class="component-title"><h3>Tailoring</h3></span>' else ""#
-										#if int($cur_result["isLeadership"]) then '<span class="component-title"><h3>Leadership</h3></span>' else ""#
-										#if int($cur_result["isLeatherworking"]) then '<span class="component-title"><h3>Leatherworking</h3></span>' else ""#
-									</p>
+									<p class="floatAlignLeft"> <span class="component-title"><h3>$cur_result["taskProfession"]</h3></span> </p>
 									<label class="clearfix" for="launch_browser">
 										<p>Task Name: $cur_result["taskName"]</p>
 										<p class="floatAlignLeft"> Task Level: $cur_result["taskLevel"]</p>

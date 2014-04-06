@@ -57,14 +57,14 @@ def checkForRewards(browser):
 			time.sleep(x)
 			#click the button by finding it on the page
 			button = browser.find_by_css('DIV.input-field.button.epic')[idx]
-			button.click()
+			button.find_by_css('button').click()
 			#wait for the collection page to load
 			while browser.is_element_not_present_by_css('.professions-rewards-modal > div:nth-child(3)'):
 				x = randint(2,6)
 				print '  waiting for collection screen to load', x, 's'
 				time.sleep(x)
 			#collect the reward
-			browser.find_by_css('.professions-rewards-modal > div:nth-child(3)').click()
+			browser.find_by_css('DIV.professions-rewards-modal').find_by_css('DIV.input-field.button').find_by_css('button').click()
 			print '  reward collected'
 			#sleep for 5 to allow the reward button to clear
 			time.sleep(5)
@@ -72,10 +72,10 @@ def checkForRewards(browser):
 	return
 	
 
-	
+'''	
 #this function will log on to the site, select the char, and goto professions
 #this function creates a browser instance and returns it
-def openToProfessions(browser):
+def openToProfessions(browser, characterName):
 	###########################################
 	#wait for the page to load
 	while browser.is_text_not_present("Professions") and browser.is_text_present("Loading Character"):
@@ -92,7 +92,7 @@ def openToProfessions(browser):
 		time.sleep(x)
 
 	return 
-
+'''
 
 
 	
@@ -144,8 +144,6 @@ def selectChar(browser, characterName):
 	print '  a quick pause to let the page load ', x, 's'
 	time.sleep(x)
 	
-	#get the url of the current page
-	curUrl = browser.url
 	
 	###########################################
 	#wait for the page to load
@@ -166,20 +164,23 @@ def selectChar(browser, characterName):
 	return
 	
 	
-def openToOverview(browser):
-	
-	#look the overview button
-	while browser.is_element_not_present_by_css('A.tab.subNav.overview.professions-overview'):
-		x = randint(5,10)
-		print '  cannot find overview tab', x, 's'
+def openToProfOverview(browser, characterName):
+	###########################################
+	#wait for the page to load
+	while browser.is_text_present("Loading Character"):
+		x = randint(2,10)
+		print '  waiting to for character page to load', x, 's'
 		time.sleep(x)
 		
 	#wait for the page to load
 	while browser.is_text_not_present("Available Profession Slots"):
 		x = randint(2,10)
 		#go to professions
-		browser.find_by_css('A.tab.subNav.overview.professions-overview').first.click()
-		print '  waiting for overview to load', x, 's'
+		print '  attempting to navagate to professions overview'
+		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions')
+		
+		#browser.find_by_css('A.tab.subNav.overview.professions-overview').first.click()
+		#print '  waiting for overview to load', x, 's'
 		time.sleep(x)
 
 	
@@ -195,7 +196,7 @@ def decideLogoutTime(browser, characterList):
 	
 		selectChar(browser, eachCharacter)
 		
-		openToProfessions(browser)
+		openToProfOverview(browser, eachCharacter)
 		
 		#get a list of the current timers
 		listOfTimers = browser.find_by_css('div.bar-text')
@@ -267,8 +268,8 @@ def runTaskManagment(browser, characterName):
 	selectChar(browser, characterName)
 	
 	#open to professions
-	print 'running openToProfessions'
-	openToProfessions(browser)
+	print 'running openToProfOverview'
+	openToProfOverview(browser, characterName)
 	
 	#check for completed tasks
 	print 'running checkForRewards'

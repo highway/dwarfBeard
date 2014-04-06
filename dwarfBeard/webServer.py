@@ -140,58 +140,13 @@ class Manage:
 		
 		
 	@cherrypy.expose
-	def addNewTask(self, character_Name=None, task_Name=None, task_Level=None, prof_Select=None, is_Alchemy=None, is_Platesmithing=None,
-					is_Weaponsmithing=None, is_Mailsmithing=None, is_Artificing=None, is_Tailoring=None, 
-					is_Leadership=None, is_Leatherworking=None):
-		
-		if prof_Select == "Alchemy": 
-			is_Alchemy = 1 
-		else: 
-			is_Alchemy = 0
-			
-		if prof_Select == "Platesmithing":
-			is_Platesmithing = 1
-		else:
-			is_Platesmithing = 0
-			
-		if prof_Select == "Weaponsmithing":
-			is_Weaponsmithing = 1
-		else:
-			is_Weaponsmithing = 0
-			
-		if prof_Select == "Mailsmithing":
-			is_Mailsmithing = 1
-		else:
-			is_Mailsmithing = 0
-			
-		if prof_Select == "Artificing":
-			is_Artificing = 1
-		else:
-			is_Artificing = 0
-			
-		if prof_Select == "Tailoring":
-			is_Tailoring = 1
-		else:
-			is_Tailoring = 0
-			
-		if prof_Select == "Leadership":
-			is_Leadership = 1
-		else:
-			is_Leadership = 0
-			
-		if prof_Select == "Leatherworking":
-			is_Leatherworking = 1
-		else:
-			is_Leatherworking = 0
-			
-		if prof_Select == None:
-			print 'no proff selected'
+	def addNewTask(self, character_Name=None, task_Name=None, task_Level=None, task_Profession="Alchemy"):
 		
 		myDB = DBConnection(dwarfBeard.DB_FILE)
 		
-		queryString = "INSERT INTO tasks (characterName, taskName, taskLevel, isAlchemy, isPlatesmithing, isWeaponsmithing, isMailsmithing, isArtificing, isTailoring, isLeadership, isLeatherworking) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+		queryString = "INSERT INTO tasks (characterName, taskName, taskLevel, taskProfession) VALUES (?,?,?,?)"
 		
-		myDB.action(queryString,(character_Name, task_Name, task_Level, is_Alchemy, is_Platesmithing, is_Weaponsmithing, is_Mailsmithing, is_Artificing, is_Tailoring, is_Leadership, is_Leatherworking))
+		myDB.action(queryString,(character_Name, task_Name, task_Level, task_Profession))
 		
 		redirect("/manage/")
 		

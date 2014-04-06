@@ -18,26 +18,29 @@ from threading import Timer
 
 
 class TaskTimer(object):
-    def __init__(self, interval, function, *args, **kwargs):
-        self._timer     = None
-        self.interval   = interval
-        self.function   = function
-        self.args       = args
-        self.kwargs     = kwargs
-        self.running = False
-        #self.start() #this will cause auto start
+	def __init__(self, interval, function, *args, **kwargs):
+		self._timer     = None
+		self.interval   = interval
+		self.function   = function
+		self.args       = args
+		self.kwargs     = kwargs
+		self.running = False
+		#self.start() #this will cause auto start
 
-    def _run(self):
-        self.is_running = False
-        self.start()
-        self.function(self, *self.args, **self.kwargs)
+	def _run(self):
+		self.running = False
+		self.start()
+		self.function(self, *self.args, **self.kwargs)
 
-    def start(self):
-        if not self.running:
-            self._timer = Timer(self.interval, self._run)
-            self._timer.start()
-            self.running = True
+	def start(self):
+		if not self.running:
+			self.function(self, *self.args, **self.kwargs)
+			self._timer = Timer(self.interval, self._run)
+			self._timer.start()
+			self.running = True
 
-    def stop(self):
-        self._timer.cancel()
-        self.running = False
+	def stop(self):
+		self._timer.cancel()
+		self.running = False
+		
+		

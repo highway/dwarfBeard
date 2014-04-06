@@ -46,7 +46,7 @@ class DBConnection:
 		if not self.hasTable("tv_shows") and not self.hasTable("db_version"):
 			queries = [
 				"CREATE TABLE characterNames (characterName TEXT);",
-				"CREATE TABLE tasks (characterName TEXT, taskName TEXT, taskLevel TEXT, isAlchemy NUMERIC, isPlatesmithing NUMERIC, isWeaponsmithing NUMERIC, isMailsmithing NUMERIC, isArtificing NUMERIC, isTailoring NUMERIC, isLeadership NUMERIC, isLeatherworking NUMERIC);",
+				"CREATE TABLE tasks (characterName TEXT, taskName TEXT, taskLevel TEXT, taskProfession TEXT);",
 				"CREATE TABLE adExchange (adPrice TEXT, zenPrice TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);",
 			]
 
