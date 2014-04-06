@@ -58,30 +58,25 @@
 	
 		<div class="component-group-desc">
 			<h2>Character Management</h2>
-			<p>Lots to do here</p>
-			<p><b>......</b></p>
 		</div>
 	
 		<div id="core-component-group1" class="component-group clearfix">
-		
-				<form id="configForm" action="addNewCharacter" method="post">
-					<label class="clearfix" for="task_Name">
-						<span class="component-desc">Enter a name to add: </span>
-						<input type="text" name="character_Name" value="" size="50" />
-					</label>
-				
-					<input type="submit" class="btn config_submitter" value="Add To List" />
-				</form>
-				
-				<form id="configForm" action="deleteCharacter" method="post">
-					<label class="clearfix" for="task_Name">
-						<span class="component-desc">Enter a name to delete: </span>
-						<input type="text" name="character_Name" value="" size="50" />
-					</label>
-				
-					<input type="submit" class="btn config_submitter" value="Delete From List" />
-				</form>
-				
+			<form id="configForm" action="addNewCharacter" method="post">
+				<label class="clearfix" for="task_Name">
+					<span class="component-desc">Enter a name to add: </span>
+					<input type="text" name="character_Name" value="" size="50" />
+				</label>
+			
+				<input type="submit" class="btn config_submitter" value="Add To List" />
+			</form>
+			<form id="configForm" action="deleteCharacter" method="post">
+				<label class="clearfix" for="task_Name">
+					<span class="component-desc">Enter a name to delete: </span>
+					<input type="text" name="character_Name" value="" size="50" />
+				</label>
+			
+				<input type="submit" class="btn config_submitter" value="Delete From List" />
+			</form>
 		</div><!-- /component-group1 //-->
 		
 		
@@ -104,8 +99,6 @@
 			<div id="manage-components">
 				<div class="component-group-desc">
 					<h2>Task Management</h2>
-					<p>Lots to do here</p>
-					<p><b>......</b></p>
 				</div>
 			
 				<div id="core-component-group1" class="component-group clearfix">
@@ -142,7 +135,7 @@
 							<input type="text" name="character_Name" value="" size="50" />
 						</div>
 						
-						<input type="submit" class="btn config_submitter" value="Save New Task" />
+						<input type="submit" class="btn config_submitter" value="Add New Task" />
 					</fieldset>
 				</div><!-- /component-group1 //-->
 			</div><!-- /manage-components -->
@@ -153,36 +146,39 @@
 			
 			<div id="manage-components">
 				#for $each_character in $taskResults:
-			
-					
-					#for $cur_result in $each_character:
-						
+				<fieldset class="component-group-list">
+				<h3>$each_character[0]</h3>
+					#for $cur_result in $each_character[1]:
 						<div id="core-component-group1" class="component-group clearfix">
-
 							<fieldset class="component-group-list">
+								<form id="configForm" action="deleteTask" method="post">
 								<div class="field-pair" style="clear: both;">
-									#if int($cur_result["isAlchemy"]) then '<span class="component-title"><h3>Alchemy</h3></span>' else ""#
-									#if int($cur_result["isPlatesmithing"]) then '<span class="component-title"><h3>Platesmithing</h3></span>' else ""#
-									#if int($cur_result["isWeaponsmithing"]) then '<span class="component-title"><h3>Weaponsmithing</h3></span>' else ""#
-									#if int($cur_result["isMailsmithing"]) then '<span class="component-title"><h3>Mailsmithing</h3></span>' else ""#
-									#if int($cur_result["isArtificing"]) then '<span class="component-title"><h3>Artificing</h3></span>' else ""#
-									#if int($cur_result["isTailoring"]) then '<span class="component-title"><h3>Tailoring</h3></span>' else ""#
-									#if int($cur_result["isLeadership"]) then '<span class="component-title"><h3>Leadership</h3></span>' else ""#
-									#if int($cur_result["isLeatherworking"]) then '<span class="component-title"><h3>Leatherworking</h3></span>' else ""#
-									
+									<p class="floatAlignRight"> <input type="submit" class="btn config_submitter" value="Delete Task" /> </p>
+									<input type="hidden" name="task_Name" value=$cur_result["taskName"] />
+									<input type="hidden" name="task_Level" value=$cur_result["taskLevel"] />
+									<input type="hidden" name="character_Name" value=$cur_result["characterName"] />
+									<p class="floatAlignLeft">
+										#if int($cur_result["isAlchemy"]) then '<span class="component-title"><h3>Alchemy</h3></span>' else ""#
+										#if int($cur_result["isPlatesmithing"]) then '<span class="component-title"><h3>Platesmithing</h3></span>' else ""#
+										#if int($cur_result["isWeaponsmithing"]) then '<span class="component-title"><h3>Weaponsmithing</h3></span>' else ""#
+										#if int($cur_result["isMailsmithing"]) then '<span class="component-title"><h3>Mailsmithing</h3></span>' else ""#
+										#if int($cur_result["isArtificing"]) then '<span class="component-title"><h3>Artificing</h3></span>' else ""#
+										#if int($cur_result["isTailoring"]) then '<span class="component-title"><h3>Tailoring</h3></span>' else ""#
+										#if int($cur_result["isLeadership"]) then '<span class="component-title"><h3>Leadership</h3></span>' else ""#
+										#if int($cur_result["isLeatherworking"]) then '<span class="component-title"><h3>Leatherworking</h3></span>' else ""#
+									</p>
 									<label class="clearfix" for="launch_browser">
 										<p>Task Name: $cur_result["taskName"]</p>
 										<p class="floatAlignLeft"> Task Level: $cur_result["taskLevel"] </p>
 										<p class="floatAlignRight"> Character: $cur_result["characterName"] </p>
 									</label>
 								</div>
+								</form>
 							</fieldset>
 						</div><!-- /component-group1 //-->
-						
 					#end for
-				
+				</fieldset>
 				#end for
-
 			</div><!-- /manage-components -->	
 
 	</div>

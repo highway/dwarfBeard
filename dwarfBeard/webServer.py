@@ -132,7 +132,7 @@ class Manage:
 			taskList = []
 			for eachTask in results:
 				taskList.append(eachTask)
-			characterTasksList.append(taskList)
+			characterTasksList.append([eachName, taskList])
 		
 		t.taskResults = characterTasksList
 		
@@ -206,7 +206,13 @@ class Manage:
 		myDB.action(queryString,(character_Name,))
 		queryString = "DELETE FROM tasks WHERE characterName=?"
 		myDB.action(queryString,(character_Name,))
+		redirect("/manage/")
 		
+	@cherrypy.expose
+	def deleteTask(self, character_Name=None, task_Name=None, task_Level=None):
+		myDB = DBConnection(dwarfBeard.DB_FILE)
+		queryString = "DELETE FROM tasks WHERE characterName=? AND taskName=? AND taskLevel=?"
+		myDB.action(queryString,(character_Name, task_Name, task_Level))
 		redirect("/manage/")
 		
 	
