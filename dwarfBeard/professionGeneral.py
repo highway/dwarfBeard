@@ -20,6 +20,7 @@ import time
 
 import dwarfBeard
 from dwarfBeard import artificingControl
+from dwarfBeard.db import DBConnection
 
 #randint(2,9) to generate rnd num between 2-9
 #time.sleep(5) # delays for 5 seconds
@@ -83,10 +84,13 @@ def openToProfessions(browser):
 		time.sleep(x)
 
 	#go to professions
-	browser.find_by_css('a.nav-button.mainNav.professions.nav-professions').first.click()
+	if browser.is_element_present_by_css('a.nav-button.mainNav.professions.nav-professions'):
+		browser.find_by_css('a.nav-button.mainNav.professions.nav-professions').first.click()
+	else:
+		print '  looking for professions nav button'
+		x = randint(2,6)
+		time.sleep(x)
 
-	
-	
 	return 
 
 
@@ -113,13 +117,22 @@ def startNewTasksManager(browser, characterName):
 	for idx, eachButton in enumerate(buttonList):
 		buttonTxtList.append(browser.find_by_css('DIV.input-field.button.epic')[idx].text)
 		print '  ', buttonTxtList[idx]
+		
+	#make connection to db
+	mydb = DBConnection(dwarfBeard.DB_FILE)
+	
+	#make a tuple of the character name
+	cName = (characterName,)
+	
+	#create an array with the task info from the db
+	taskArray = mydb.action("SELECT * FROM tasks WHERE characterName=?", cName).fetchall()
 
 	#here is a test for button text
 	for idx, eachButton in enumerate(buttonTxtList):
 		if eachButton == 'Choose Task':
 			print '  empty task found'
 			print '  attempting to start new artificing task'
-			if artificingControl.startNewArtificingTasks(browser, characterName):
+			if artificingControl.startNewArtificingTasks(browser, characterName, taskArray):
 				print '  new artificing task started'
 	
 	return
@@ -136,16 +149,20 @@ def selectChar(browser, characterName):
 	
 	###########################################
 	#wait for the page to load
-	#look for the char name
-	while browser.is_text_not_present(characterName):
-		x = randint(2,10)
-		print '  waiting for character page to load', x, 's'
-		time.sleep(x)
+	#just pause for a few seconds
+	x = randint(2,10)
+	time.sleep(x)
 	
 	#select a character
 	#now we select the character by url
 	browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
 	
+	while browser.is_element_not_present_by_css('a.nav-button.mainNav.professions.nav-professions'):
+		x = randint(3,6)
+		time.sleep(x)
+		print '  attempting to navagate to character sheet'
+		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
+		
 	return
 	
 	
@@ -170,60 +187,75 @@ def openToOverview(browser):
 
 #this function will return the best amount of time to wait
 #before logging back in to manage tasks again
-def decideLogoutTime(browser):
+def decideLogoutTime(browser, characterList):
 	
-	openToOverview(browser)
+	waitTimeArray = []
 	
-	#get a list of the current timers
-	listOfTimers = browser.find_by_css('div.bar-text')
+	for eachCharacter in characterList:
 	
-	#pull out the timer text
-	listOfTimerText = []
-	for eachTimer in listOfTimers:
-		listOfTimerText.append(eachTimer.text)
+		selectChar(browser, eachCharacter)
 		
-	#create a list of the split text
-	splitTimerTextList = []
-	for eachText in listOfTimerText:
-		splitTimerTextList.append(eachText.split())
-	
-	#create a list of the timer values in seconds
-	timerStatusInSec = []
-	
-	#go through the timer list and convert each one into seconds
-	for idx, eachArray in enumerate(splitTimerTextList):
-		#append a new item to the timerStatusInSec list
-		timerStatusInSec.append(0)
+		openToProfessions(browser)
 		
-		#now we loop through each of the timer texts
-		for eachText in eachArray:
-			#here we convert the value to seconds and add it to the 
-			#timer status list
-			if 'h' in eachText:
-				timerStatusInSec[idx] = timerStatusInSec[idx] + int(eachText[0:len(eachText)-1]) *60 *60
+		#get a list of the current timers
+		listOfTimers = browser.find_by_css('div.bar-text')
+		
+		#pull out the timer text
+		listOfTimerText = []
+		for eachTimer in listOfTimers:
+			listOfTimerText.append(eachTimer.text)
 			
-			elif 'm' in eachText:
-				timerStatusInSec[idx] = timerStatusInSec[idx] + int(eachText[0:len(eachText)-1]) *60
+		#create a list of the split text
+		splitTimerTextList = []
+		for eachText in listOfTimerText:
+			splitTimerTextList.append(eachText.split())
+		
+		#create a list of the timer values in seconds
+		timerStatusInSec = []
+		
+		#go through the timer list and convert each one into seconds
+		for idx, eachArray in enumerate(splitTimerTextList):
+			#append a new item to the timerStatusInSec list
+			timerStatusInSec.append(0)
+			
+			#now we loop through each of the timer texts
+			for eachText in eachArray:
+				#here we convert the value to seconds and add it to the 
+				#timer status list
+				if 'h' in eachText:
+					timerStatusInSec[idx] = timerStatusInSec[idx] + int(eachText[0:len(eachText)-1]) *60 *60
 				
-			elif 's' in eachText:
-				timerStatusInSec[idx] = timerStatusInSec[idx] + int(eachText[0:len(eachText)-1])
+				elif 'm' in eachText:
+					timerStatusInSec[idx] = timerStatusInSec[idx] + int(eachText[0:len(eachText)-1]) *60
+					
+				elif 's' in eachText:
+					timerStatusInSec[idx] = timerStatusInSec[idx] + int(eachText[0:len(eachText)-1])
 				
-	#now we decide what is the shortest amount of time to wait before logging on again
+		#now we decide what is the shortest amount of time to wait before logging on again
+		#init the wait time to a really long time
+		waitTime = 1000000
+		
+		#look through the timer status list for the shortest time
+		for eachTimer in timerStatusInSec:
+			if eachTimer < waitTime:
+				waitTime = eachTimer
+				
+		#if any of the timers are within 10.5min of the shortest then lets wait for those to complete
+		for eachTimer in timerStatusInSec:
+			if eachTimer < waitTime+630 and not eachTimer == waitTime:
+				waitTime = eachTimer
+		
+		#add some random time to the time out
+		waitTime = waitTime + randint(30,300)
+		
+		waitTimeArray.append(waitTime)
+	
+	#finally we have to choose the shortest wait timer
 	#init the wait time to a really long time
 	waitTime = 1000000
-	
-	#look through the timer status list for the shortest time
-	for eachTimer in timerStatusInSec:
-		if eachTimer < waitTime:
-			waitTime = eachTimer
-			
-	#if any of the timers are within 10.5min of the shortest then lets wait for those to complete
-	for eachTimer in timerStatusInSec:
-		if eachTimer < waitTime+630 and not eachTimer == waitTime:
-			waitTime = eachTimer
-	
-	#add some random time to the time out
-	waitTime = waitTime + randint(30,300)
+	for eachTime in waitTimeArray:
+		if eachTime < waitTime:
+			waitTime = eachTime
 	
 	#return the time to wait
 	return waitTime

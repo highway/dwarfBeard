@@ -28,11 +28,13 @@ To run from source you will need:
 
 ## Setup
 
+By default the web interface runs at localhost:8083/
+It should open automatically on the first run.
 During the first run a config.ini file will be created in your dwarfBeard directory.
-Before running the tasks you will need to visit the configuration page as set up the following at a minimum:
+Before running the tasks you will need to visit the config page as set up the following at a minimum:
 
 * ff_profile_path = "C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\9g8jzsay.default"
- - set this to your user profile
+ - set this to your user profile info
  - see [FireFox Profile Manager][fireFoxProfileManager]
 * nw_user_name = ""
 * nw_password = ""
@@ -41,6 +43,9 @@ Before running the tasks you will need to visit the configuration page as set up
  - this is the account name you see once logged into the site: characterName@accountName
  
 Your account information is stored on your local computer in the config.ini file.
+
+Next you will need to choose your tasks.  The choice and priority is completely up to you.
+Visit the manage page to add a character and tasks.
 
  
 ## Bugs

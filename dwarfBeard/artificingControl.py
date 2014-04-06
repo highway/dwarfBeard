@@ -18,6 +18,7 @@ from splinter import Browser
 import time
 from random import randint
 
+import dwarfBeard
 from dwarfBeard.db import DBConnection
 
 
@@ -33,29 +34,17 @@ def getTaskPriorityArray(characterName):
 	#create an array with the task info from the db
 	taskArray = mydb.action("SELECT * FROM tasks WHERE characterName=?", cName).fetchall()
 	
-	'''
-	#this is the old manual way. comment out the above to use this
-	#add the task info in order of priority
-	taskArray = [
-		{'taskName':'Deep Wilderness Gathering', 'taskLevel':'14'},
-		{'taskName':'Upgrade Engraver', 'taskLevel':'13'},
-		{'taskName':'Upgrade Carver', 'taskLevel':'6'},
-		{'taskName':'Hire an additional Carver', 'taskLevel':'2'}
-		]
-	
-	'''
-	
 	return taskArray
 		
 
-def startNewArtificingTasks(browser, characterName):
+def startNewArtificingTasks(browser, characterName, taskPriorityArray):
 	
 	#this task should begin a new task and then return True if it succeeded
 	time.sleep(4)
 	
 	###########################################
 	#wait for the page to load
-	#look the artificing button
+	#look the artificing button  
 	while browser.is_element_not_present_by_css('a.tab.subNav.professions-Artificing.Artificing'):
 		x = randint(5,10)
 		print '  cannot find artificing tab', x, 's'
@@ -64,21 +53,18 @@ def startNewArtificingTasks(browser, characterName):
 		
 	###########################################
 	#wait for the page to load
-	while browser.is_element_not_present_by_css('div.task-list-entry.common'):
+	while browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found'):
 		browser.find_by_css('a.tab.subNav.professions-Artificing.Artificing').first.click()
 		x = randint(5,10)
-		print '  trying to navaget to artificing tasks', x, 's'
+		print '  trying to navagate to artificing tasks', x, 's'
 		time.sleep(x)
 	
 	###########################################
 	#wait for the page to load
-	while browser.is_element_not_present_by_css('div.task-list-entry.common'):
+	while browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found'):
 		x = randint(5,8)
 		print '  waiting for artificing tasks to load', x, 's'
 		time.sleep(x)
-	
-	#get the task priority list first
-	taskPriorityArray = getTaskPriorityArray(characterName)
 	
 	#start with the first task
 	taskPrioritIndex = 0
@@ -98,7 +84,7 @@ def startNewArtificingTasks(browser, characterName):
 		#collect a list of tasks
 		listOfTasks = browser.find_by_css('div.task-list-entry.common')
 		
-		#look through the task for the one you want
+		#look through the tasks for the one you want
 		for idx, eachTask in enumerate(listOfTasks):
 			if taskPriorityArray[taskPrioritIndex]['taskName'] and taskPriorityArray[taskPrioritIndex]['taskLevel'] in browser.find_by_css('div.task-list-entry.common')[idx].text:
 				if not ' red' in browser.find_by_css('div.task-list-entry.common')[idx].html:
@@ -129,16 +115,26 @@ def startNewArtificingTasks(browser, characterName):
 				print '  checking if requirments have been met'
 				if not ' red' in browser.find_by_css('div.task-list-entry.common')[idx].html:
 					#now we start the task
-					listOfTasks[idx].find_by_css('div.input-field.button.light.with-arrow').click()
 					###########################################
 					#wait for the page to load
 					while browser.is_element_not_present_by_css("DIV.input-field.button.epic"):
+						listOfTasks[idx].find_by_css('div.input-field.button.light.with-arrow').find_by_css('button').click()
 						x = randint(2,5)
-						print '  waiting for artificing tasks accept to load', x, 's'
+						print '  trying to click select task, waiting', x, 's'
 						time.sleep(x)
+						
+						
 					#start the task
-					browser.find_by_css('DIV.input-field.button.epic').first.click()
+					while browser.is_element_not_present_by_css("DIV.input-field.button.epic"):
+						x = randint(2,5)
+						print '  waiting for task start button, waiting', x, 's'
+						time.sleep(x)
+						
+					browser.find_by_css('DIV.input-field.button.epic').find_by_css('button').click()
+						
 					#signal that a task was started
+					print '  started task'
+					
 					return True
 	
 	#if this point is reached then no tasks were started

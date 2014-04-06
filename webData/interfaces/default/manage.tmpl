@@ -64,7 +64,7 @@
 			<form id="configForm" action="addNewCharacter" method="post">
 				<label class="clearfix" for="task_Name">
 					<span class="component-desc">Enter a name to add: </span>
-					<input type="text" name="character_Name" value="" size="50" />
+					<input type="text" name="character_Name" value="" size="50" required/>
 				</label>
 			
 				<input type="submit" class="btn config_submitter" value="Add To List" />
@@ -72,7 +72,7 @@
 			<form id="configForm" action="deleteCharacter" method="post">
 				<label class="clearfix" for="task_Name">
 					<span class="component-desc">Enter a name to delete: </span>
-					<input type="text" name="character_Name" value="" size="50" />
+					<input type="text" name="character_Name" value="" size="50" required/>
 				</label>
 			
 				<input type="submit" class="btn config_submitter" value="Delete From List" />
@@ -104,35 +104,34 @@
 				<div id="core-component-group1" class="component-group clearfix">
 					<fieldset class="component-group-list">
 						<div class="field-pair">
-							<input type="checkbox" name="is_Alchemy" id="is_Alchemy"/>
-							<span class="component-title">is_Alchemy</span>
-							<input type="checkbox" name="is_Platesmithing" id="is_Platesmithing"/>
-							<span class="component-title">is_Platesmithing</span>
-							<input type="checkbox" name="is_Weaponsmithing" id="is_Weaponsmithing"/>
-							<span class="component-title">is_Weaponsmithing</span>
-							<input type="checkbox" name="is_Mailsmithing" id="is_Mailsmithing"/>
-							<span class="component-title">is_Mailsmithing</span>
-							<input type="checkbox" name="is_Artificing" id="is_Artificing"/>
-							<span class="component-title">is_Artificing</span>
-							<input type="checkbox" name="is_Tailoring" id="is_Tailoring"/>
-							<span class="component-title">is_Tailoring</span>
-							<input type="checkbox" name="is_Leadership" id="is_Leadership"/>
-							<span class="component-title">is_Leadership</span>
-							<input type="checkbox" name="is_Leatherworking" id="is_Leatherworking"/>
-							<span class="component-title">is_Leatherworking</span>
+							Select Character: 
+							<select name="character_Name">
+								#for $cur_result in $characterResults:
+									<option value="$cur_result">$cur_result</option>
+								#end for
+							</select>
+							</br>
+							Select Profession Type
+							<select name="prof_Select">
+								<option value="Alchemy">Alchemy</option>
+								<option value="Platesmithing">Platesmithing</option>
+								<option value="Weaponsmithing">Weaponsmithing</option>
+								<option value="Mailsmithing">Mailsmithing</option>
+								<option value="Artificing">Artificing</option>
+								<option value="Tailoring">Tailoring</option>
+								<option value="Leadership">Leadership</option>
+								<option value="Leatherworking">Leatherworking</option>
+							</select>
 							</br>
 							<label class="clearfix" for="task_Name">
 								<span class="component-desc">Enter the complete task name here: </span>
-								<input type="text" name="task_Name" value="" size="50" />
+								<input type="text" name="task_Name" value="" size="50" required/>
 							</label>
 							</br>
 							<label class="clearfix" for="task_Level">
 								<span class="component-desc">Enter the task level here: </span>
-								<input type="text" name="task_Level" value="" size="4" />
+								<input type="text" name="task_Level" value="" size="4" required/>
 							</label>
-							</br>
-							<span class="component-desc">Enter the complete character name here: </span>
-							<input type="text" name="character_Name" value="" size="50" />
 						</div>
 						
 						<input type="submit" class="btn config_submitter" value="Add New Task" />
@@ -154,9 +153,9 @@
 								<form id="configForm" action="deleteTask" method="post">
 								<div class="field-pair" style="clear: both;">
 									<p class="floatAlignRight"> <input type="submit" class="btn config_submitter" value="Delete Task" /> </p>
-									<input type="hidden" name="task_Name" value=$cur_result["taskName"] />
-									<input type="hidden" name="task_Level" value=$cur_result["taskLevel"] />
-									<input type="hidden" name="character_Name" value=$cur_result["characterName"] />
+									<input type="hidden" name="task_Name" value="$cur_result["taskName"]" />
+									<input type="hidden" name="task_Level" value="$cur_result["taskLevel"]" />
+									<input type="hidden" name="character_Name" value="$cur_result["characterName"]" />
 									<p class="floatAlignLeft">
 										#if int($cur_result["isAlchemy"]) then '<span class="component-title"><h3>Alchemy</h3></span>' else ""#
 										#if int($cur_result["isPlatesmithing"]) then '<span class="component-title"><h3>Platesmithing</h3></span>' else ""#
@@ -169,8 +168,8 @@
 									</p>
 									<label class="clearfix" for="launch_browser">
 										<p>Task Name: $cur_result["taskName"]</p>
-										<p class="floatAlignLeft"> Task Level: $cur_result["taskLevel"] </p>
-										<p class="floatAlignRight"> Character: $cur_result["characterName"] </p>
+										<p class="floatAlignLeft"> Task Level: $cur_result["taskLevel"]</p>
+										<p class="floatAlignRight"> Character: $cur_result["characterName"]</p>
 									</label>
 								</div>
 								</form>

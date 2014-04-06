@@ -73,7 +73,7 @@ def executeTaskActionList(timer):
 
 	#running decide log out time
 	print 'running decideLogoutTime'
-	logoutTime = professionGeneral.decideLogoutTime(browser)
+	logoutTime = professionGeneral.decideLogoutTime(browser, characterList)
 
 	#running endSession
 	print 'running end session'
