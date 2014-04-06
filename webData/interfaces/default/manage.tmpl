@@ -10,6 +10,18 @@
 #set $today = str($datetime.date.today())
 #set global $topmenu="home"#
 #import os.path
+<head>
+	<style>
+		p.floatAlignLeft {
+			float: left;
+		}
+		
+		p.floatAlignRight {
+			float: right;
+		}
+	</style>
+</head>
+
 
 <header>
 
@@ -45,7 +57,7 @@
 	<div id="manage-content">
 	
 		<div class="component-group-desc">
-			<h3>Character Management</h3>
+			<h2>Character Management</h2>
 			<p>Lots to do here</p>
 			<p><b>......</b></p>
 		</div>
@@ -80,7 +92,7 @@
 				</div>
 				#for $cur_result in $characterResults:
 				
-					$cur_result["characterName"], 
+					$cur_result, 
 					
 				#end for
 			</fieldset>
@@ -91,7 +103,7 @@
 		
 			<div id="manage-components">
 				<div class="component-group-desc">
-					<h3>Task Management</h3>
+					<h2>Task Management</h2>
 					<p>Lots to do here</p>
 					<p><b>......</b></p>
 				</div>
@@ -130,31 +142,45 @@
 							<input type="text" name="character_Name" value="" size="50" />
 						</div>
 						
-						<input type="submit" class="btn config_submitter" value="Save Changes" />
+						<input type="submit" class="btn config_submitter" value="Save New Task" />
 					</fieldset>
 				</div><!-- /component-group1 //-->
 			</div><!-- /manage-components -->
 		</form>
 		</br>
 		
+		<h2>Task List</h2>
 			
 			<div id="manage-components">
-				#for $cur_result in $taskResults:
+				#for $each_character in $taskResults:
+			
 					
-					<div id="core-component-group1" class="component-group clearfix">
+					#for $cur_result in $each_character:
+						
+						<div id="core-component-group1" class="component-group clearfix">
 
-						<fieldset class="component-group-list">
-							<div class="field-pair">
-								<input type="checkbox" name="isArtificing" id="isArtificing" #if int($cur_result["isArtificing"]) then "checked=\"checked\"" else ""#/>
-								<label class="clearfix" for="launch_browser">
-									<h3>Task Name: $cur_result["taskName"]</h3>
-									<p>Task Level: $cur_result["taskLevel"]</p>
-									<p>Character: $cur_result["characterName"]</p>
-								</label>
-							</div>
-						</fieldset>
-					</div><!-- /component-group1 //-->
-					
+							<fieldset class="component-group-list">
+								<div class="field-pair" style="clear: both;">
+									#if int($cur_result["isAlchemy"]) then '<span class="component-title"><h3>Alchemy</h3></span>' else ""#
+									#if int($cur_result["isPlatesmithing"]) then '<span class="component-title"><h3>Platesmithing</h3></span>' else ""#
+									#if int($cur_result["isWeaponsmithing"]) then '<span class="component-title"><h3>Weaponsmithing</h3></span>' else ""#
+									#if int($cur_result["isMailsmithing"]) then '<span class="component-title"><h3>Mailsmithing</h3></span>' else ""#
+									#if int($cur_result["isArtificing"]) then '<span class="component-title"><h3>Artificing</h3></span>' else ""#
+									#if int($cur_result["isTailoring"]) then '<span class="component-title"><h3>Tailoring</h3></span>' else ""#
+									#if int($cur_result["isLeadership"]) then '<span class="component-title"><h3>Leadership</h3></span>' else ""#
+									#if int($cur_result["isLeatherworking"]) then '<span class="component-title"><h3>Leatherworking</h3></span>' else ""#
+									
+									<label class="clearfix" for="launch_browser">
+										<p>Task Name: $cur_result["taskName"]</p>
+										<p class="floatAlignLeft"> Task Level: $cur_result["taskLevel"] </p>
+										<p class="floatAlignRight"> Character: $cur_result["characterName"] </p>
+									</label>
+								</div>
+							</fieldset>
+						</div><!-- /component-group1 //-->
+						
+					#end for
+				
 				#end for
 
 			</div><!-- /manage-components -->	

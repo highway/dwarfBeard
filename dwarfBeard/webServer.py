@@ -118,8 +118,23 @@ class Manage:
 		
 		t = PageTemplate(file="manage.tmpl")
 		
-		t.characterResults = myDB.action('SELECT * FROM characterNames')
-		t.taskResults = myDB.action('SELECT * FROM tasks')
+		results = myDB.action('SELECT * FROM characterNames')
+		charList = []
+		for eachName in results:
+			charList.append(str(eachName['characterName']))
+		
+		t.characterResults = charList
+		
+		characterTasksList = []
+		
+		for eachName in charList:
+			results = myDB.action('SELECT * FROM tasks WHERE characterName=?', (eachName,))
+			taskList = []
+			for eachTask in results:
+				taskList.append(eachTask)
+			characterTasksList.append(taskList)
+		
+		t.taskResults = characterTasksList
 		
 		return _munge(t)
 		
@@ -189,6 +204,9 @@ class Manage:
 		myDB = DBConnection(dwarfBeard.DB_FILE)
 		queryString = "DELETE FROM characterNames WHERE characterName=?"
 		myDB.action(queryString,(character_Name,))
+		queryString = "DELETE FROM tasks WHERE characterName=?"
+		myDB.action(queryString,(character_Name,))
+		
 		redirect("/manage/")
 		
 	
