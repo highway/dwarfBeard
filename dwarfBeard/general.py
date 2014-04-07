@@ -13,8 +13,13 @@
 #
 # See <http://www.gnu.org/licenses/> for license information.
 
+import dwarfBeard
+import re
+import time
 from threading import Timer
-
+from splinter import Browser
+from random import randint
+from dwarfBeard.db import DBConnection
 
 
 class TaskTimer(object):
@@ -43,4 +48,54 @@ class TaskTimer(object):
 		self._timer.cancel()
 		self.running = False
 		
+		
+def logZenExchange(browser, characterName):
+	#first we get the purchase price
+	#wait for the page to load
+	while browser.is_text_not_present("Top ZEN Listings"):
+		x = randint(3,10)
+		#go to professions
+		print '  attempting to navagate to zen exchange'
+		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/exchange')
+		time.sleep(x)
+		
+	#collect the data from the zen purchase table, we only need the lowest price
+	data = browser.find_by_css('TABLE#gatewayTableBuyZen.dataTable')
+	purchaseText = str(data.text).split(" ")
+	
+	#pull out the lowest price
+	lowZenPurchasePrice = filter(None, re.split(r'(\d+)', purchaseText[3]))[0]
+	print '  lowest zen purchase price = ', lowZenPurchasePrice
+	
+	#now we get the sell price
+	#wait for the page to load
+	while browser.is_text_not_present("Top ZEN Purchase Requests"):
+		x = randint(3,10)
+		#go to professions
+		print '  attempting to navagate to ad exchange'
+		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/exchange-sellzen')
+		time.sleep(x)
+		
+	#collect the data from the zen purchase table, we only need the lowest price
+	#this one is much easier to grab
+	data = browser.find_by_css('TABLE#gatewayTableSellZen.dataTable')
+	sellText = str(data.text).split(" ")
+	lowAdPurchasePrice = sellText[8]
+	print '   higest zen sell price = ', lowAdPurchasePrice
+	
+	#save the data to the db
+	#make connection to db
+	myDB = DBConnection(dwarfBeard.DB_FILE)
+	
+	queryString = "INSERT INTO adExchange (adPrice, zenPrice) VALUES (?,?)"
+	myDB.action(queryString,(lowAdPurchasePrice, lowZenPurchasePrice))
+	
+	return
+	
+	
+	
+	
+	
+	
+	
 		

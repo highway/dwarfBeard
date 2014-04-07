@@ -4,14 +4,18 @@ dwarfBeard
 A Neverwinter MMO professions manager web app with some additional features
 
 dwarfBeard is currently an alpha release. There may be severe bugs in it and at any given time it may not work at all. 
-Currently it is only setup to manage Artificing tasks. But it does support multiple characters.
+
+
+## Features
+
+* Multiple character support
+* Web interface for management of app settings
+* Add any of the standard tasks
 
 ## Project Goals
 
-* Web interface for management of app settings
 * Will manage any of the professions available
-* Multiple character support
-* Profession and task prioritization including rare tasks
+* Task prioritization to include rare tasks
 * AD Exchange price trending
 * Daily SCA reward collection
 * and much more!
@@ -24,6 +28,8 @@ To run from source you will need:
 * [python 2.5+][pythonDownloads]
 * [splinter][splinterDownlaods]
 * [firefox][firefoxDownloads]
+
+If you need help email me.
 
 
 ## Setup

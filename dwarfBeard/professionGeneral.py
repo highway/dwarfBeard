@@ -140,26 +140,24 @@ def startNewTasksManager(browser, characterName):
 	
 	
 def selectChar(browser, characterName):
-	x = randint(2,7)
-	print '  a quick pause to let the page load ', x, 's'
-	time.sleep(x)
-	
 	
 	###########################################
 	#wait for the page to load
 	#just pause for a few seconds
-	x = randint(2,10)
+	x = randint(2,4)
+	print '  a quick pause to let the page load ', x, 's'
 	time.sleep(x)
 	
 	#select a character
-	#now we select the character by url
+	#now we select the character by url	
 	browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
 	
+	#just to make sure we made it
 	while browser.is_element_not_present_by_css('a.nav-button.mainNav.professions.nav-professions'):
+		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
 		x = randint(3,6)
 		time.sleep(x)
 		print '  attempting to navagate to character sheet'
-		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
 		
 	return
 	
@@ -178,9 +176,6 @@ def openToProfOverview(browser, characterName):
 		#go to professions
 		print '  attempting to navagate to professions overview'
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions')
-		
-		#browser.find_by_css('A.tab.subNav.overview.professions-overview').first.click()
-		#print '  waiting for overview to load', x, 's'
 		time.sleep(x)
 
 	

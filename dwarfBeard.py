@@ -41,6 +41,7 @@ from dwarfBeard.webServerInit import initWebServer
 from dwarfBeard import browserControl
 from dwarfBeard import artificingControl
 from dwarfBeard import professionGeneral
+from dwarfBeard import general
 from dwarfBeard.general import TaskTimer
 from dwarfBeard.db import DBConnection
 
@@ -74,6 +75,10 @@ def executeTaskActionList(timer):
 		#run the manager
 		professionGeneral.runTaskManagment(browser, eachCharacter)
 
+	#poll ad exchange rates, only one character name is needed
+	print 'running logZenExchange'
+	general.logZenExchange(browser, characterList[0])
+		
 	#running decide log out time
 	print 'running decideLogoutTime'
 	logoutTime = professionGeneral.decideLogoutTime(browser, characterList)
