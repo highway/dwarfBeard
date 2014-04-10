@@ -64,6 +64,7 @@ class PageTemplate (Template):
 		self.siteMenu = [
 			{ 'title': 'Home',            'path': 'home/'           },
 			{ 'title': 'Manage',          'path': 'manage/'         },
+			{ 'title': 'AD Exchange',     'path': 'adexchange/'         },
 			{ 'title': 'Config',          'path': 'config/'         },
 			]
 
@@ -213,6 +214,26 @@ class Config:
 		redirect("/config/")
 					
 	
+class AdExchange:
+
+	@cherrypy.expose
+	def index(self):
+		t = PageTemplate(file="adexchange.tmpl")
+		
+		myDB = DBConnection(dwarfBeard.DB_FILE)
+		
+		results = myDB.action('SELECT * FROM adExchange')
+		
+		adData = []
+		for eachRow in results:
+			adData.append({'adPrice': int(eachRow['adPrice']), 'zenPrice': int(eachRow['zenPrice']), 'timestamp': str(eachRow['timestamp'])})
+		
+		t.adData = adData
+		
+		return _munge(t)
+	
+	
+	
 
 class WebInterface:
 
@@ -229,4 +250,5 @@ class WebInterface:
 	home = Home()
 	manage = Manage()
 	config = Config()
+	adexchange = AdExchange()
 	

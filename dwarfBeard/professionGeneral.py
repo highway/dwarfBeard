@@ -157,7 +157,7 @@ def selectChar(browser, characterName):
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
 		x = randint(3,6)
 		time.sleep(x)
-		print '  attempting to navagate to character sheet'
+		print '  attempting to navigate to character sheet'
 		
 	return
 	
@@ -174,7 +174,7 @@ def openToProfOverview(browser, characterName):
 	while browser.is_text_not_present("Available Profession Slots"):
 		x = randint(2,10)
 		#go to professions
-		print '  attempting to navagate to professions overview'
+		print '  attempting to navigate to professions overview'
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions')
 		time.sleep(x)
 

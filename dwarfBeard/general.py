@@ -55,7 +55,7 @@ def logZenExchange(browser, characterName):
 	while browser.is_text_not_present("Top ZEN Listings"):
 		x = randint(3,10)
 		#go to professions
-		print '  attempting to navagate to zen exchange'
+		print '  attempting to navigate to zen exchange'
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/exchange')
 		time.sleep(x)
 		
@@ -72,7 +72,7 @@ def logZenExchange(browser, characterName):
 	while browser.is_text_not_present("Top ZEN Purchase Requests"):
 		x = randint(3,10)
 		#go to professions
-		print '  attempting to navagate to ad exchange'
+		print '  attempting to navigate to ad exchange'
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/exchange-sellzen')
 		time.sleep(x)
 		

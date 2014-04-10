@@ -47,7 +47,7 @@ class DBConnection:
 			queries = [
 				"CREATE TABLE characterNames (characterName TEXT);",
 				"CREATE TABLE tasks (characterName TEXT, taskName TEXT, taskLevel TEXT, taskProfession TEXT);",
-				"CREATE TABLE adExchange (adPrice TEXT, zenPrice TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);",
+				"CREATE TABLE adExchange (adPrice TEXT, zenPrice TEXT, timestamp DATETIME DEFAULT (datetime('now','localtime')));",
 			]
 
 			for query in queries:

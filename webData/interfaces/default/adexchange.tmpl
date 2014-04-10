@@ -1,0 +1,84 @@
+#import dwarfBeard
+#import datetime
+
+#from dwarfBeard import db
+
+#set global $title="AD Exchange Rates"
+#set global $header="Hello World, this is dwarfBeard"
+
+#set global $sitePath = ".."
+#set $today = str($datetime.date.today())
+#set global $topmenu="home"#
+#import os.path
+
+<html>
+  <head>
+	<style>
+		p.floatAlignLeft {
+			float: left;
+		}
+		
+		p.floatAlignRight {
+			float: right;
+		}
+	</style>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+			  ['Date', 'Zen Price', 'AD Price'],
+			  #for $eachRow in $adData:
+			  ["$eachRow['timestamp']", $eachRow['zenPrice'], $eachRow['adPrice']],
+			  #end for
+			]);
+
+		var options = {
+			title: 'AD Enchange Rates',
+			curveType: 'function',
+			legend: { position: 'bottom' },
+			explorer: {},
+			selectionMode: 'multiple'
+		};
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  
+	<header>
+
+	#if $varExists('siteMenu'):
+		<div id="SubMenu">
+			<span>
+		#set $first = True
+		#for $menuItem in $siteMenu:
+			#if 'requires' not in $menuItem or $menuItem.requires():
+				#if type($menuItem.path) == dict:
+					#if $first then "" else "</span>| <span>"#<b>$menuItem.title</b>
+					#set $first = False
+					#set $inner_first = True
+					#for $cur_link in $menuItem.path:
+						#if $inner_first then "" else "&middot; "#<a class="inner" href="$siteRoot/$menuItem.path[$cur_link]">$cur_link</a>
+						#set $inner_first = False
+					#end for
+				#else
+					#if $first then "" else "| "#<a href="$siteRoot/$menuItem.path" #if 'confirm' in $menuItem then "class=\"confirm\"" else "" #>$menuItem.title</a>
+					#set $first = False
+				#end if
+			#end if
+		#end for
+			</span>
+		</div>
+	#end if
+
+	</header>
+
+
+    <body style="font-family: Arial;border: 0 none;">
+		<div id="chart_div" style="width: 90pct; height: 800px;"></div>
+	</body>
+</html>
+
