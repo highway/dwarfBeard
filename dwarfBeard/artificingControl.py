@@ -48,8 +48,8 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 	###########################################
 	#wait for the page to load
 	reissueCount = 0
-	while browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found'):
-		x = randint(3,7)
+	while browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_element_not_present_by_css('DIV.task-list-entry.rare') and browser.is_text_not_present('No matching records found'):
+		x = randint(6,10)
 		#go to professions
 		print '  attempting to navigate to profession task list'
 		if taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Platesmithing':
@@ -76,8 +76,8 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 		###########################################
 		#wait for the page to load
 		reissueCount = 0
-		while (browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found')) or not ((taskPriorityArray[taskPrioritIndex]['taskProfession'] in browser.url) or (taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Platesmithing' and 'Armorsmithing_Heavy' in browser.url) or (taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Mailsmithing' and 'Armorsmithing_Med' in browser.url) ):
-			x = randint(5,8)
+		while (browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_element_not_present_by_css('DIV.task-list-entry.rare') and browser.is_text_not_present('No matching records found')) or not ((taskPriorityArray[taskPrioritIndex]['taskProfession'] in browser.url) or (taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Platesmithing' and 'Armorsmithing_Heavy' in browser.url) or (taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Mailsmithing' and 'Armorsmithing_Med' in browser.url) ):
+			x = randint(6,10)
 			#go to professions
 			print '  attempting to navigate to', taskPriorityArray[taskPrioritIndex]['taskProfession']
 			if taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Platesmithing':
@@ -101,6 +101,8 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 	
 		#collect a list of tasks
 		listOfTasks = browser.find_by_css('div.task-list-entry.common')
+		#collect any rare task available
+		listOfRareTasks = browser.find_by_css('DIV.task-list-entry.rare')
 		
 		#look through the tasks for the one you want
 		for idx, eachTask in enumerate(listOfTasks):
@@ -111,8 +113,20 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 					lookingForTask = False
 					break
 				else:
-					print '  a task was found but requirments not met'
+					print '  the task was found but requirments not met'
 					break
+					
+		#if the task want found above the we can check for rare tasks
+		if lookingForTask:
+			for idx, eachTask in enumerate(listOfRareTasks):
+				if taskPriorityArray[taskPrioritIndex]['taskName'] and taskPriorityArray[taskPrioritIndex]['taskLevel'] in browser.find_by_css('DIV.task-list-entry.rare')[idx].text:
+					if not ' red' in browser.find_by_css('DIV.task-list-entry.rare')[idx].html:
+						print '  found the task'
+						lookingForTask = False
+						break
+					else:
+						print '  the task was found but requirments not met'
+						break
 		
 		#if we didn't find the task
 		#increment the taskPrioritIndex to search for the next in priority
@@ -126,6 +140,8 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 	if taskPrioritIndex <= len(taskPriorityArray)-1:
 		#collect a list of tasks again to make sure they are current
 		listOfTasks = browser.find_by_css('div.task-list-entry.common')
+		#collect any rare task available
+		listOfRareTasks = browser.find_by_css('DIV.task-list-entry.rare')
 		
 		#look through the task for the one you want
 		for idx, eachTask in enumerate(listOfTasks):
@@ -153,6 +169,35 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 						
 					#signal that a task was started
 					print '  started task'
+					
+					return True
+					
+		#now we'll do the same thig for rare tasks
+		for idx, eachTask in enumerate(listOfRareTasks):
+			if taskPriorityArray[taskPrioritIndex]['taskName'] and taskPriorityArray[taskPrioritIndex]['taskLevel'] in browser.find_by_css('DIV.task-list-entry.rare')[idx].text:
+				#we found the right task but we need to check of all the requirements have been met
+				print '  checking if rare task requirments have been met'
+				if not ' red' in browser.find_by_css('DIV.task-list-entry.rare')[idx].html:
+					#now we start the task
+					###########################################
+					#wait for the page to load
+					while browser.is_element_not_present_by_css("DIV.input-field.button.epic"):
+						listOfRareTasks[idx].find_by_css('div.input-field.button.light.with-arrow').find_by_css('button').click()
+						x = randint(2,5)
+						print '  trying to click select task, waiting', x, 's'
+						time.sleep(x)
+						
+						
+					#start the task
+					while browser.is_element_not_present_by_css("DIV.input-field.button.epic"):
+						x = randint(2,5)
+						print '  waiting for task start button, waiting', x, 's'
+						time.sleep(x)
+						
+					browser.find_by_css('DIV.input-field.button.epic').find_by_css('button').click()
+						
+					#signal that a task was started
+					print '  started rare task'
 					
 					return True
 	

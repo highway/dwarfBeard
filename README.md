@@ -10,14 +10,15 @@ dwarfBeard is currently an alpha release. There may be severe bugs in it and at 
 
 * Multiple character support
 * Web interface for management of app settings
-* Add any of the standard tasks
-
-## Project Goals
-
 * Will manage any of the professions available
-* Task prioritization to include rare tasks
+* Add any task. You decide the priority order
 * AD Exchange price trending
+
+
+## Future Project Goals
+
 * Daily SCA reward collection
+* Twitter notifications
 * and much more!
 
 
@@ -26,6 +27,8 @@ dwarfBeard is currently an alpha release. There may be severe bugs in it and at 
 To run from source you will need:
 
 * [python 2.5+][pythonDownloads]
+* [cherryPy 3+][cherryPyDownloads]
+* [cheetah 2.4.4][cheetahDownloads]
 * [splinter][splinterDownlaods]
 * [firefox][firefoxDownloads]
 
@@ -50,8 +53,11 @@ Before running the tasks you will need to visit the config page as set up the fo
  
 Your account information is stored on your local computer in the config.ini file.
 
+
 Next you will need to choose your tasks.  The choice and priority is completely up to you.
-Visit the manage page to add a character and tasks.
+* Visit the manage page to add a character and tasks.
+* Add your character name(s) first
+* Add your tasks in the order of priority
 
  
 ## Bugs
@@ -65,6 +71,8 @@ If you find a bug please report it or it'll never get fixed. Verify that it hasn
 
 
 [pythonDownloads]:https://www.python.org/downloads/
+[cherryPyDownloads]:https://pypi.python.org/pypi/CherryPy/3.2.4
+[cheetahDownloads]:http://www.cheetahtemplate.org/download.html
 [splinterDownlaods]:http://splinter.cobrateam.info/docs/
 [fireFoxProfileManager]:https://support.mozilla.org/en-US/kb/profile-manager-create-and-remove-firefox-profiles
 [firefoxDownloads]:http://www.mozilla.org/en-US/firefox/new/

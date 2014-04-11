@@ -126,12 +126,12 @@ def startNewTasksManager(browser, characterName):
 	for idx, eachButton in enumerate(buttonTxtList):
 		if eachButton == 'Choose Task':
 			print '  empty task found'
-			print '  attempting to start new artificing task'
+			print '  attempting to start new profession task'
 			if artificingControl.startNewArtificingTasks(browser, characterName, taskArray):
-				print '  new artificing task started'
+				print '  new profession task started'
 			#if no task was started then there is no need to attempt to fill in any remaining available task slots
 			else:
-				print '  did not find an available task to start for', characterName, ' discontinuing search'
+				print '  did not find an available task to start for', characterName, 'discontinuing search'
 				return
 	
 	return
