@@ -28,11 +28,11 @@ def getTaskPriorityArray(characterName):
 	#make connection to db
 	mydb = DBConnection(dwarfBeard.DB_FILE)
 	
-	#make a tuple of the character name
-	cName = (characterName,)
+	#query string
+	query = "SELECT * FROM tasks WHERE characterName=?"
 	
 	#create an array with the task info from the db
-	taskArray = mydb.action("SELECT * FROM tasks WHERE characterName=?", cName).fetchall()
+	taskArray = mydb.action(query, (characterName,)).fetchall()
 	
 	return taskArray
 		
@@ -58,10 +58,12 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 			browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions-tasks/' + 'Armorsmithing_Med')
 		else:
 			browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions-tasks/' + taskPriorityArray[taskPrioritIndex]['taskProfession'])
+		reissueCount += 1
 		if reissueCount > 4:
 			browser.reload()
 			x = 20
 			reissueCount = 0
+			print '  trying browser reload and sleeping for 20s'
 		time.sleep(x)
 	
 	print '  begining search for the task'
@@ -77,17 +79,19 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 		while (browser.is_element_not_present_by_css('div.task-list-entry.common') and browser.is_text_not_present('No matching records found')) or not ((taskPriorityArray[taskPrioritIndex]['taskProfession'] in browser.url) or (taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Platesmithing' and 'Armorsmithing_Heavy' in browser.url) or (taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Mailsmithing' and 'Armorsmithing_Med' in browser.url) ):
 			x = randint(5,8)
 			#go to professions
-			print '  attempting to navigate to profession task list'
+			print '  attempting to navigate to', taskPriorityArray[taskPrioritIndex]['taskProfession']
 			if taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Platesmithing':
 				browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions-tasks/' + 'Armorsmithing_Heavy')
 			elif taskPriorityArray[taskPrioritIndex]['taskProfession'] == 'Mailsmithing':
 				browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions-tasks/' + 'Armorsmithing_Med')
 			else:
 				browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions-tasks/' + taskPriorityArray[taskPrioritIndex]['taskProfession'])
+			reissueCount += 1
 			if reissueCount > 4:
 				browser.reload()
 				x = 20
 				reissueCount = 0
+				print '  trying browser reload and sleeping for 20s'
 			time.sleep(x)
 				
 		#this will input into the filter box
@@ -113,7 +117,7 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 		#if we didn't find the task
 		#increment the taskPrioritIndex to search for the next in priority
 		if lookingForTask:
-			print " didn't find first priority, looking for the next"
+			print "  didn't find", taskPriorityArray[taskPrioritIndex]['taskName'], "as an available task"
 			taskPrioritIndex += 1
 			
 		

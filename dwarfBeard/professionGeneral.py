@@ -118,14 +118,9 @@ def startNewTasksManager(browser, characterName):
 		buttonTxtList.append(browser.find_by_css('DIV.input-field.button.epic')[idx].text)
 		print '  ', buttonTxtList[idx]
 		
-	#make connection to db
-	mydb = DBConnection(dwarfBeard.DB_FILE)
 	
-	#make a tuple of the character name
-	cName = (characterName,)
-	
-	#create an array with the task info from the db
-	taskArray = mydb.action("SELECT * FROM tasks WHERE characterName=?", cName).fetchall()
+	#get an array with the task info from the db
+	taskArray = artificingControl.getTaskPriorityArray(characterName)
 
 	#here is a test for button text
 	for idx, eachButton in enumerate(buttonTxtList):
@@ -134,6 +129,10 @@ def startNewTasksManager(browser, characterName):
 			print '  attempting to start new artificing task'
 			if artificingControl.startNewArtificingTasks(browser, characterName, taskArray):
 				print '  new artificing task started'
+			#if no task was started then there is no need to attempt to fill in any remaining available task slots
+			else:
+				print '  did not find an available task to start for', characterName, ' discontinuing search'
+				return
 	
 	return
 	
