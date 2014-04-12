@@ -151,30 +151,52 @@ def selectChar(browser, characterName):
 	#now we select the character by url	
 	browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
 	
+	reissueCount = 0
 	#just to make sure we made it
 	while browser.is_element_not_present_by_css('a.nav-button.mainNav.professions.nav-professions'):
-		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
-		x = randint(3,6)
-		time.sleep(x)
 		print '  attempting to navigate to character sheet'
+		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/')
+		x = randint(3,7)
+		reissueCount += 1
+		if reissueCount > 4:
+			browser.reload()
+			x = 20
+			reissueCount = 0
+			print '  trying browser reload and sleeping for 20s'
+		time.sleep(x)
+		
 		
 	return
 	
 	
 def openToProfOverview(browser, characterName):
+	reissueCount = 0
 	###########################################
 	#wait for the page to load
 	while browser.is_text_present("Loading Character"):
 		x = randint(2,10)
 		print '  waiting to for character page to load', x, 's'
+		reissueCount += 1
+		if reissueCount > 4:
+			browser.reload()
+			x = 20
+			reissueCount = 0
+			print '  trying browser reload and sleeping for 20s'
 		time.sleep(x)
 		
+	reissueCount = 0
 	#wait for the page to load
 	while browser.is_text_not_present("Available Profession Slots"):
 		x = randint(2,10)
 		#go to professions
 		print '  attempting to navigate to professions overview'
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/professions')
+		reissueCount += 1
+		if reissueCount > 4:
+			browser.reload()
+			x = 20
+			reissueCount = 0
+			print '  trying browser reload and sleeping for 20s'
 		time.sleep(x)
 
 	
@@ -203,6 +225,7 @@ def decideLogoutTime(browser, characterList):
 		#create a list of the split text
 		splitTimerTextList = []
 		for eachText in listOfTimerText:
+			print '  time till task complete', eachText
 			splitTimerTextList.append(eachText.split())
 		
 		#create a list of the timer values in seconds

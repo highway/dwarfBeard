@@ -175,6 +175,31 @@ class Manage:
 		redirect("/manage/")
 		
 	
+class ConfigNotifications:
+
+    @cherrypy.expose
+    def index(self):
+        t = PageTemplate(file="config_notifications.tmpl")
+        t.submenu = ConfigMenu
+        return _munge(t)
+
+    @cherrypy.expose
+    def saveNotifications(self, use_twitter=None, twitter_notify_onsnatch=None, twitter_notify_ondownload=None):
+
+        results = []
+
+        # Online
+        sickbeard.USE_TWITTER = config.checkbox_to_value(use_twitter)
+        sickbeard.TWITTER_NOTIFY_ONSNATCH = config.checkbox_to_value(twitter_notify_onsnatch)
+        sickbeard.TWITTER_NOTIFY_ONDOWNLOAD = config.checkbox_to_value(twitter_notify_ondownload)
+
+        sickbeard.save_config()
+
+        print 'Configuration Saved', ek.ek(os.path.join, sickbeard.CONFIG_FILE)
+
+        redirect("/config/notifications/")
+	
+	
 class Config:
 
 	@cherrypy.expose
@@ -212,7 +237,10 @@ class Config:
 		dwarfBeard.save_config()
 		
 		redirect("/config/")
+		
+	notifications = ConfigNotifications()
 					
+	
 	
 class AdExchange:
 

@@ -1,9 +1,16 @@
 dwarfBeard
 ==========
 
-A Neverwinter MMO professions manager web app with some additional features
+A Neverwinter MMO professions manager web app with some additional features.
+
+In case you don't already know dwarfBeard is written in python.  Hosting this project on git hub will allow the community 
+to contribute to the future of this app and for anyone to easily update to the latest version with no installation.  
+When you run this app for the first time the interface should open in your web browser automatically.  After configuring your
+character info and account settings you can enable the task timer on the home page. 
+
 
 dwarfBeard is currently an alpha release. There may be severe bugs in it and at any given time it may not work at all. 
+
 
 
 ## Features
@@ -13,6 +20,9 @@ dwarfBeard is currently an alpha release. There may be severe bugs in it and at 
 * Will manage any of the professions available
 * Add any task. You decide the priority order
 * AD Exchange price trending
+* Decides when to log on again to collect rewards
+* Random wait times
+
 
 
 ## Future Project Goals
