@@ -115,26 +115,33 @@ class Manage:
 	@cherrypy.expose
 	def index(self):
 	
+		#get a db connection
 		myDB = DBConnection(dwarfBeard.DB_FILE)
 		
+		#load the page template
 		t = PageTemplate(file="manage.tmpl")
 		
+		#get a list of the character names as strings
 		results = myDB.action('SELECT * FROM characterNames')
 		charList = []
 		for eachName in results:
 			charList.append(str(eachName['characterName']))
 		
+		#set the character name list to the page template
 		t.characterResults = charList
 		
+		#create a blank task list to hold tasks sorted by character
 		characterTasksList = []
-		
+		#get a seperate task list for each character
 		for eachName in charList:
 			results = myDB.action('SELECT * FROM tasks WHERE characterName=?', (eachName,))
 			taskList = []
 			for eachTask in results:
 				taskList.append(eachTask)
+			#append each characters task list to the main list sorted by character
 			characterTasksList.append([eachName, taskList])
 		
+		#set the sorted task list to the tamplate
 		t.taskResults = characterTasksList
 		
 		return _munge(t)
@@ -175,31 +182,7 @@ class Manage:
 		redirect("/manage/")
 		
 	
-class ConfigNotifications:
 
-    @cherrypy.expose
-    def index(self):
-        t = PageTemplate(file="config_notifications.tmpl")
-        t.submenu = ConfigMenu
-        return _munge(t)
-
-    @cherrypy.expose
-    def saveNotifications(self, use_twitter=None, twitter_notify_onsnatch=None, twitter_notify_ondownload=None):
-
-        results = []
-
-        # Online
-        sickbeard.USE_TWITTER = config.checkbox_to_value(use_twitter)
-        sickbeard.TWITTER_NOTIFY_ONSNATCH = config.checkbox_to_value(twitter_notify_onsnatch)
-        sickbeard.TWITTER_NOTIFY_ONDOWNLOAD = config.checkbox_to_value(twitter_notify_ondownload)
-
-        sickbeard.save_config()
-
-        print 'Configuration Saved', ek.ek(os.path.join, sickbeard.CONFIG_FILE)
-
-        redirect("/config/notifications/")
-	
-	
 class Config:
 
 	@cherrypy.expose
@@ -238,7 +221,20 @@ class Config:
 		
 		redirect("/config/")
 		
-	notifications = ConfigNotifications()
+		
+	@cherrypy.expose
+	def saveNotifications(self, use_twitter=None, twitter_notify_on_levelup=None, twitter_notify_on_raretask=None):
+
+		#twitter
+		dwarfBeard.USE_TWITTER = use_twitter == 'on'
+		dwarfBeard.TWITTER_NOTIFY_ON_LEVELUP = twitter_notify_on_levelup == 'on'
+		dwarfBeard.TWITTER_NOTIFY_ON_RARETASK = twitter_notify_on_raretask == 'on'
+
+		dwarfBeard.save_config()	
+		
+		print 'Configuration Saved'
+
+		redirect("/config/")
 					
 	
 	

@@ -51,6 +51,12 @@ def executeTaskActionList(timer):
 	#signal the task is in execution
 	dwarfBeard.taskExecRunning = 1
 	
+	#stop the task timer during execution
+	#this is done to prevent a second execution from firing while we are still executing and 
+	#the timer will be restarted when this function is finished which will result in a
+	#more accurate logout time
+	timer.stop()
+	
 	#get a connection to the db
 	mainDB = DBConnection(dwarfBeard.DB_FILE)
 	
@@ -98,6 +104,12 @@ def executeTaskActionList(timer):
 	#set the timer interval to the logoutTime
 	timer.interval = logoutTime
 	
+	if dwarfBeard.runTasks:
+		#start the timer
+		timer.start()
+	else:
+		print 'run tasks disabled. not starting login timer'
+	
 	#signal the task is finished
 	dwarfBeard.taskExecRunning = 0
 	
@@ -138,6 +150,7 @@ def main():
 		elif not os.access(os.path.dirname(dwarfBeard.CONFIG_FILE), os.W_OK):
 			sys.exit("Config file directory: " + os.path.dirname(dwarfBeard.CONFIG_FILE) + " must be writeable (write permissions). Exiting")
 	
+	#change the working directory
 	os.chdir(dwarfBeard.DATA_DIR)
 	
 	# Load the config and publish it to the dwarfBeard package
@@ -151,16 +164,15 @@ def main():
 	#init the db if needed
 	myDb = DBConnection(dwarfBeard.DB_FILE)
 	if not myDb.initTest():
-		print 'creating init schema'
 		myDb.createInitialSchema()
 	
-	
-	# Initialize the config and our threads
+	# Initialize dwarfBeard and the config
 	dwarfBeard.initialize()
 	
 	# Use this PID for everything
 	dwarfBeard.PID = os.getpid()
 
+	#set the log dir
 	if dwarfBeard.WEB_LOG:
 		log_dir = dwarfBeard.LOG_DIR
 	else:
@@ -181,36 +193,38 @@ def main():
 		dwarfBeard.launchBrowser(dwarfBeard.WEB_PORT)
 		print "Unable to start web server, is something else running on port: " + str(dwarfBeard.WEB_PORT)
 
-		
 	# Launch browser if we're supposed to
 	if dwarfBeard.LAUNCH_BROWSER:
 		dwarfBeard.launchBrowser(dwarfBeard.WEB_PORT)
 		
-	#create a task timer that execute the task action list at a set interval
+	#create a task timer that executes the task action list at a set interval
+	#this is how we will control the time between profession jobs
 	taskActionTimer = TaskTimer(1, executeTaskActionList)
 	
+	
+	#here is the run loop
 	while True:
 
-		#when we get the runTasks enable start the task loop 
+		#when we get the runTasks signal start the task timer 
 		#if its not already running
+		#if task collection is in progress the timer will not be running
 		if dwarfBeard.runTasks:
-			if not taskActionTimer.running:
-				print 'starting timer'
+			if not (taskActionTimer.running or dwarfBeard.taskExecRunning):
+				print 'starting task timer'
 				#set a default interval. this will be reset by the log out function
-				taskActionTimer.interval = 1400
+				taskActionTimer.interval = 1
 				taskActionTimer.start()
 		else:
 			if taskActionTimer.running:
-				print 'stopping timer'
+				print 'stopping task timer'
 				taskActionTimer.stop()
 		
-		#sleep at the end of each scan	
-		time.sleep(0.5)
+		#sleep at the end of each scan so processor time is not consumed
+		time.sleep(1.0)
 			
 	
 	
 if __name__ == "__main__":
-
 	
 	main()
 

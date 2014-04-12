@@ -43,6 +43,7 @@ class DBConnection:
 		return self.hasTable("characterNames") and self.hasTable("tasks") and self.hasTable("adExchange")
 
 	def createInitialSchema(self):
+		print 'creating initial db schema'
 		if not self.hasTable("tv_shows") and not self.hasTable("db_version"):
 			queries = [
 				"CREATE TABLE characterNames (characterName TEXT);",

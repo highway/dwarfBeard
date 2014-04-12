@@ -264,7 +264,7 @@ def decideLogoutTime(browser, characterList):
 				waitTime = eachTimer
 		
 		#add some random time to the time out
-		waitTime = waitTime + randint(30,300)
+		waitTime = waitTime + randint(60,360)
 		
 		waitTimeArray.append(waitTime)
 	
@@ -278,6 +278,7 @@ def decideLogoutTime(browser, characterList):
 	#return the time to wait
 	return waitTime
 
+	
 def runTaskManagment(browser, characterName):
 	
 	#selectCharacter

@@ -56,6 +56,11 @@ WEB_PASSWORD = None
 
 LAUNCH_BROWSER = None
 
+USE_TWITTER = None
+TWITTER_NOTIFY_ON_LEVELUP = None
+TWITTER_NOTIFY_ON_RARETASK = None
+
+
 taskExecRunning = 0
 
 INIT_LOCK = Lock()
@@ -68,11 +73,13 @@ def initialize():
 	with INIT_LOCK:
 
 		global runTasks, ACTUAL_LOG_DIR, LOG_DIR, WEB_PORT, WEB_LOG, WEB_ROOT, WEB_USERNAME, WEB_PASSWORD, WEB_HOST, WEB_IPV6, \
-			LAUNCH_BROWSER, FF_PROFILE_PATH, NW_USER_NAME, NW_PASSWORD, NW_ACCOUNT_NAME, taskExecRunning, __INITIALIZED__
+			LAUNCH_BROWSER, FF_PROFILE_PATH, NW_USER_NAME, NW_PASSWORD, NW_ACCOUNT_NAME, taskExecRunning, USE_TWITTER, TWITTER_NOTIFY_ON_LEVELUP, \
+			TWITTER_NOTIFY_ON_RARETASK, __INITIALIZED__
 
 		if __INITIALIZED__:
 			return False
 		
+		#CFG would have been loaded before calling this function if it existed
 		CheckSection(CFG, 'General')
 
 		ACTUAL_LOG_DIR = check_setting_str(CFG, 'General', 'log_dir', 'Logs')
@@ -99,6 +106,10 @@ def initialize():
 		NW_USER_NAME = check_setting_str(CFG, 'General', 'nw_user_name', '')
 		NW_PASSWORD = check_setting_str(CFG, 'General', 'nw_password', '')
 		NW_ACCOUNT_NAME = check_setting_str(CFG, 'General', 'nw_account_name', '')
+		
+		USE_TWITTER = bool(check_setting_int(CFG, 'General', 'use_twitter', 0))
+		TWITTER_NOTIFY_ON_LEVELUP = bool(check_setting_int(CFG, 'General', 'twitter_notify_on_levelup', 0))
+		TWITTER_NOTIFY_ON_RARETASK = bool(check_setting_int(CFG, 'General', 'twitter_notify_on_raretask', 0))
 		
 		if not os.path.isfile(CONFIG_FILE):
 			print "Unable to find '" + CONFIG_FILE + "', all settings will be default!"
@@ -129,6 +140,9 @@ def save_config():
 	new_config['General']['nw_user_name'] = NW_USER_NAME
 	new_config['General']['nw_password'] = NW_PASSWORD
 	new_config['General']['nw_account_name'] = NW_ACCOUNT_NAME
+	new_config['General']['use_twitter'] = USE_TWITTER
+	new_config['General']['twitter_notify_on_levelup'] = TWITTER_NOTIFY_ON_LEVELUP
+	new_config['General']['twitter_notify_on_raretask'] = TWITTER_NOTIFY_ON_RARETASK
 	new_config.write()
 	
 	

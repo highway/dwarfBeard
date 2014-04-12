@@ -22,7 +22,7 @@ from threading import Timer
 
 def openAbrowser(profilePath):
 	#open a browser and select a profile so that cookies will be used and saved
-	browser = Browser('firefox', profile = profilePath)
+	browser = Browser('firefox', profile= profilePath, wait_time= 1)
 
 	#return the browser
 	return browser

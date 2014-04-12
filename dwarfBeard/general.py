@@ -34,15 +34,15 @@ class TaskTimer(object):
 
 	def _run(self):
 		self.running = False
-		self.start()
 		self.function(self, *self.args, **self.kwargs)
-
+		self.start()
+		
 	def start(self):
 		if not self.running:
-			self.function(self, *self.args, **self.kwargs)
 			self._timer = Timer(self.interval, self._run)
 			self._timer.start()
 			self.running = True
+			#self.function(self, *self.args, **self.kwargs) #this calls the function immediately at the start, not what we want at this time
 
 	def stop(self):
 		self._timer.cancel()
@@ -52,11 +52,18 @@ class TaskTimer(object):
 def logZenExchange(browser, characterName):
 	#first we get the purchase price
 	#wait for the page to load
+	reissueCount = 0
 	while browser.is_text_not_present("Top ZEN Listings"):
 		x = randint(3,10)
 		#go to professions
 		print '  attempting to navigate to zen exchange'
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/exchange')
+		reissueCount += 1
+		if reissueCount > 4:
+			browser.reload()
+			x = 20
+			reissueCount = 0
+			print '  trying browser reload and sleeping for 20s'
 		time.sleep(x)
 		
 	#collect the data from the zen purchase table, we only need the lowest price
@@ -69,11 +76,17 @@ def logZenExchange(browser, characterName):
 	
 	#now we get the sell price
 	#wait for the page to load
+	reissueCount = 0
 	while browser.is_text_not_present("Top ZEN Purchase Requests"):
 		x = randint(3,10)
 		#go to professions
 		print '  attempting to navigate to ad exchange'
 		browser.visit('http://gateway.playneverwinter.com/#char(' + characterName + '@' + dwarfBeard.NW_ACCOUNT_NAME + ')/exchange-sellzen')
+		if reissueCount > 4:
+			browser.reload()
+			x = 20
+			reissueCount = 0
+			print '  trying browser reload and sleeping for 20s'
 		time.sleep(x)
 		
 	#collect the data from the zen purchase table, we only need the lowest price

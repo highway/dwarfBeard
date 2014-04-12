@@ -109,7 +109,7 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 		
 			if taskPriorityArray[taskPrioritIndex]['taskName'] and taskPriorityArray[taskPrioritIndex]['taskLevel'] in browser.find_by_css('div.task-list-entry.common')[idx].text:
 				if not ' red' in browser.find_by_css('div.task-list-entry.common')[idx].html:
-					print '  found the task'
+					print '  found the task', taskPriorityArray[taskPrioritIndex]['taskName']
 					lookingForTask = False
 					break
 				else:
@@ -121,7 +121,7 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 			for idx, eachTask in enumerate(listOfRareTasks):
 				if taskPriorityArray[taskPrioritIndex]['taskName'] and taskPriorityArray[taskPrioritIndex]['taskLevel'] in browser.find_by_css('DIV.task-list-entry.rare')[idx].text:
 					if not ' red' in browser.find_by_css('DIV.task-list-entry.rare')[idx].html:
-						print '  found the task'
+						print '  found the task', taskPriorityArray[taskPrioritIndex]['taskName']
 						lookingForTask = False
 						break
 					else:
@@ -172,7 +172,7 @@ def startNewArtificingTasks(browser, characterName,  taskPriorityArray):
 					
 					return True
 					
-		#now we'll do the same thig for rare tasks
+		#now we'll do the same thing for rare tasks
 		for idx, eachTask in enumerate(listOfRareTasks):
 			if taskPriorityArray[taskPrioritIndex]['taskName'] and taskPriorityArray[taskPrioritIndex]['taskLevel'] in browser.find_by_css('DIV.task-list-entry.rare')[idx].text:
 				#we found the right task but we need to check of all the requirements have been met
