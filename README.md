@@ -1,13 +1,14 @@
 dwarfBeard
 ==========
 
-A Neverwinter MMO professions manager web app with some additional features.
+A Neverwinter MMO professions manager with some additional features.
 
 In case you don't already know dwarfBeard is written in python.  Hosting this project on git hub will allow the community 
-to contribute to the future of this app and for anyone to easily update to the latest version with no installation.  
+to contribute to the future of this app and for anyone to easily update to the latest version with no installation.  If you've 
+never run a python web app before I encourage you to take the time to give this a try.  
+
 When you run this app for the first time the interface should open in your web browser automatically.  After configuring your
 character info and account settings you can enable the task timer on the home page.  The web interface is bare bones for now.
-
 
 dwarfBeard is currently an alpha release. There may be severe bugs in it and at any given time it may not work at all. 
 
@@ -20,8 +21,8 @@ dwarfBeard is currently an alpha release. There may be severe bugs in it and at 
 * Will manage any of the professions available
 * Add any task. You decide the priority order
 * AD Exchange price trending
-* Decides when to log on again to collect rewards
-* Random wait times
+* Decides when to log on again to collect rewards based on task completion time of all characters
+* Random pause times for a bit of humanization
 
 
 
@@ -41,11 +42,45 @@ To run from source you will need:
 * [cheetah 2.4.4][cheetahDownloads]
 * [splinter][splinterDownlaods]
 * [firefox][firefoxDownloads]
+* [tortisegit][tortisegitHome]
 
 If you need help email me.
 
 
-## Setup
+## Installation
+
+If you've never used git hub or run a python program I realise this can seem a little daunting but it's worth it.
+There is a whole slew of great apps out there just waiting for you to find them.
+
+Here is a quick install guide to get you on your way:
+
+* install fire fox
+* install tortisegit (actually git for windows and then tortisegit)
+
+* install python 2.5+ (get the latest 2.x version.  Don't get 3.x as it may not work with everything as expected.)
+ - make sure python is added to your system path.  Google it to find out how.
+ - you must install python before you can install any of the modules below
+* download cherryPy 
+ - to install a python module open a cmd prompt in the folder where you extracted cherry py
+ - type: python setup.py install
+ - if this doesn't work python may not be in your system path
+* download cheetah template
+ - open a cmd prompt to your extract folder and type: python setup.py install
+* download splinter
+ - open a cmd prompt to your extract folder and type: python setup.py install
+
+Next you'll need to clone this repository to your hard drive.  This will allow you to pull that very latest version any time you wish.
+If you installed tortisegit this is really easy to do:
+* copy the clone url from this projects main page: https://github.com/highway/dwarfBeard.git
+* open a windows explorer to your C: drive (or where ever)
+* right click and select: Git Clone
+* the copied project url is probably already entered, if not, paste it and go
+* thats it! all you have to do now is run dwarfbeard.py
+
+I doubt I've covered every detail of course but this should get you well on your way.
+
+
+## Configuration
 
 By default the web interface runs at localhost:8083/
 It should open automatically on the first run.
@@ -79,6 +114,14 @@ If you find a bug please report it or it'll never get fixed. Verify that it hasn
 
 * Thanks to [midgetSpy][midgetSpy] for the inspiration
 
+* Other absolutely amazing projects you should really checkout:
+ - [Sick Beard][sickbeardGit]
+ - [Couch Potato][couchpotatoGit]
+ - [Headphones][headphonesGit]
+ - [Sick Beard Anime][sickbeardAnimeGit]
+ - [Plex][plexApp]
+ 
+ 
 
 [pythonDownloads]:https://www.python.org/downloads/
 [cherryPyDownloads]:https://pypi.python.org/pypi/CherryPy/3.2.4
@@ -86,5 +129,11 @@ If you find a bug please report it or it'll never get fixed. Verify that it hasn
 [splinterDownlaods]:http://splinter.cobrateam.info/docs/
 [fireFoxProfileManager]:https://support.mozilla.org/en-US/kb/profile-manager-create-and-remove-firefox-profiles
 [firefoxDownloads]:http://www.mozilla.org/en-US/firefox/new/
+[tortisegitHome]:https://code.google.com/p/tortoisegit/
 [issues]:https://github.com/highway/dwarfBeard/issues
 [midgetSpy]:https://github.com/midgetspy
+[sickbeardGit]:https://github.com/midgetspy/Sick-Beard
+[sickbeardAnimeGit]:https://github.com/lad1337/Sick-Beard
+[headphonesGit]:https://github.com/rembo10/headphones
+[couchpotatoGit]:https://github.com/RuudBurger/CouchPotatoServer
+[plexApp]:https://plex.tv/
