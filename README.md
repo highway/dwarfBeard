@@ -38,7 +38,6 @@ dwarfBeard is currently an alpha release. There may be severe bugs in it and at 
 To run from source you will need:
 
 * [python 2.5+][pythonDownloads]
-* [cherryPy 3+][cherryPyDownloads]
 * [cheetah 2.4.4][cheetahDownloads]
 * [splinter][splinterDownlaods]
 * [firefox][firefoxDownloads]
@@ -60,12 +59,10 @@ Here is a quick install guide to get you on your way:
 * install python 2.5+ (get the latest 2.x version.  Don't get 3.x as it may not work with everything as expected.)
  - make sure python is added to your system path.  Google it to find out how.
  - you must install python before you can install any of the modules below
-* download cherryPy 
+* download cheetah template 
  - to install a python module open a cmd prompt in the folder where you extracted cherry py
  - type: python setup.py install
  - if this doesn't work python may not be in your system path
-* download cheetah template
- - open a cmd prompt to your extract folder and type: python setup.py install
 * download splinter
  - open a cmd prompt to your extract folder and type: python setup.py install
 
