@@ -27,6 +27,7 @@ from Cheetah.Template import Template
 import cherrypy.lib
 
 import dwarfBeard
+from dwarfBeard import notifiers
 from dwarfBeard.db import DBConnection
 
 try:
@@ -109,6 +110,32 @@ class Home:
 		dwarfBeard.runTasks = not dwarfBeard.runTasks
 		redirect("/home/")
 		
+	@cherrypy.expose
+	def twitterStep1(self):
+		cherrypy.response.headers['Cache-Control'] = "max-age=0,no-cache,no-store"
+
+		return notifiers.twitter_notifier._get_authorization()
+
+	@cherrypy.expose
+	def twitterStep2(self, key):
+		cherrypy.response.headers['Cache-Control'] = "max-age=0,no-cache,no-store"
+
+		result = notifiers.twitter_notifier._get_credentials(key)
+		print u"result:", str(result)
+		if result:
+			return "Key verification successful"
+		else:
+			return "Unable to verify key"
+
+	@cherrypy.expose
+	def testTwitter(self):
+		cherrypy.response.headers['Cache-Control'] = "max-age=0,no-cache,no-store"
+
+		result = notifiers.twitter_notifier.test_notify()
+		if result:
+			return "Tweet successful, check your twitter to make sure it worked"
+		else:
+			return "Error sending tweet"
 
 class Manage:
 	

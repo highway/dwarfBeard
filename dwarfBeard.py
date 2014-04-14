@@ -183,7 +183,7 @@ def main():
 		initWebServer({
 					  'port': dwarfBeard.WEB_PORT,
 					  'host': dwarfBeard.WEB_HOST,
-					  'data_root': os.path.join(dwarfBeard.PROG_DIR, 'data'),
+					  'data_root': os.path.join(dwarfBeard.PROG_DIR, 'webData'),
 					  'web_root': dwarfBeard.WEB_ROOT,
 					  'log_dir': log_dir,
 					  'username': dwarfBeard.WEB_USERNAME,

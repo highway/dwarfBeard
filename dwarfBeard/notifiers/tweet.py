@@ -28,8 +28,8 @@ import lib.pythontwitter as twitter
 
 class TwitterNotifier:
 
-    consumer_key = "needs to be replaced for dwarfBeard"
-    consumer_secret = "needs to be replaced for dwarBeard"
+    consumer_key = "bvx5tIQTqOlkpU3NQ5LJqwCV6"
+    consumer_secret = "vnDm06dCsJXiHOMJIioMtjpCPM5xlXBCRfaOB0lMoTvx85v8Ko"
     
     REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
     ACCESS_TOKEN_URL  = 'https://api.twitter.com/oauth/access_token'
@@ -92,7 +92,7 @@ class TwitterNotifier:
     
         print 'resp[status] = ', str(resp['status'])
         if resp['status'] != '200':
-            print 'The request for a token with did not succeed: ', str(resp['status']), logger.ERROR)
+            print 'The request for a token with did not succeed: ', str(resp['status']), logger.ERROR
             return False
         else:
             print 'Your Twitter Access Token key:',  access_token['oauth_token']

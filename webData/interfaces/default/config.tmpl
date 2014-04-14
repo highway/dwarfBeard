@@ -11,11 +11,34 @@
 #set global $topmenu="home"#
 #import os.path
 
+<!DOCTYPE HTML>
+<html>
+
 <head>
+	<script type="text/javascript" charset="utf-8">
+    <!--
+        siteRoot = "$siteRoot"; // needed for browser.js & ajaxNotifications.js
+	//-->
+    </script>
+			
+	<script type="text/javascript" src="$siteRoot/js/lib/jquery-1.7.2.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/bootstrap.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery-ui-1.10.4.custom.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery.cookie.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery.selectboxes.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery.tablesorter-2.14.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery.tablesorter.widgets-2.14.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery.qtip-2012-04-26.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery.pnotify-1.2.2.min.js?$sitePID"></script>
+    <script type="text/javascript" src="$siteRoot/js/lib/jquery.form-3.35.js?$sitePID"></script>
+		
+
 	<script type="text/javascript" src="$siteRoot/js/configNotifications.js?$sitePID"></script>
 	<script type="text/javascript" src="$siteRoot/js/config.js?$sitePID"></script>
-	
+	<script type="text/javascript" src="$siteRoot/js/browser.js?$sitePID"></script>
+	<script type="text/javascript" src="$siteRoot/js/ajaxNotifications.js?$sitePID"></script>
 </head>
+
 
 <header>
 
@@ -45,8 +68,8 @@
 
 </header>
 
-<html>
-    <body>
+
+<body>
 	<div id="config">
 	<div id="config-content">
 		<form id="configForm" action="saveGeneral" method="post">
@@ -178,7 +201,7 @@
 	
 	<div id="config">
     <div id="config-content">
-        <form id="configForm" action="saveNotifications" method="post">
+        <form id="configFormNotify" action="saveNotifications" method="post">
             <div id="config-components" class="notifier">
 
 
@@ -262,6 +285,6 @@
     </div>
 	</div>
 	
-    </body>
+</body>
 </html>
 

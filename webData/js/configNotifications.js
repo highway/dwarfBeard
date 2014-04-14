@@ -4,19 +4,19 @@ $(document).ready(function () {
    
     $('#twitterStep1').click(function () {
         $('#testTwitter-result').html(loading);
-        $.get(sbRoot + "/home/twitterStep1", function (data) {window.open(data); })
+        $.get(siteRoot + "/home/twitterStep1", function (data) {window.open(data); })
             .done(function () { $('#testTwitter-result').html('<b>Step1:</b> Confirm Authorization'); });
     });
 
     $('#twitterStep2').click(function () {
         $('#testTwitter-result').html(loading);
         var twitter_key = $("#twitter_key").val();
-        $.get(sbRoot + "/home/twitterStep2", {'key': twitter_key},
+        $.get(siteRoot + "/home/twitterStep2", {'key': twitter_key},
             function (data) { $('#testTwitter-result').html(data); });
     });
 
     $('#testTwitter').click(function () {
-        $.get(sbRoot + "/home/testTwitter",
+        $.get(siteRoot + "/home/testTwitter",
             function (data) { $('#testTwitter-result').html(data); });
     });
 

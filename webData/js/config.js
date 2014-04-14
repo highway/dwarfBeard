@@ -14,7 +14,7 @@ $(document).ready(function () {
     });
 
     // bind 'myForm' and provide a simple callback function 
-    $('#configForm').ajaxForm({
+    $('#configFormNotify').ajaxForm({
         beforeSubmit: function () {
             $('.config_submitter').each(function () {
                 $(this).attr("disabled", "disabled");
