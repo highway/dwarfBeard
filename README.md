@@ -49,7 +49,7 @@ If you need help email me.
 ## Installation
 
 If you've never used git hub or run a python program I realise this can seem a little daunting but it's worth it.
-There is a whole slew of great apps out there just waiting for you to find them.
+There is a whole slew of great apps out there just waiting for you to find them. (see below for some suggestions!)
 
 Here is a quick install guide to get you on your way:
 
@@ -58,13 +58,19 @@ Here is a quick install guide to get you on your way:
 
 * install python 2.5+ (get the latest 2.x version.  Don't get 3.x as it may not work with everything as expected.)
  - make sure python is added to your system path.  Google it to find out how.
- - you must install python before you can install any of the modules below
+ - you must install python before you can install either of the next two python modules listed below
 * download cheetah template 
- - to install a python module open a cmd prompt in the folder where you extracted cherry py
- - type: python setup.py install
+ - extract cheetah to a folder such as C:\cheetah
+ - open a command prompt in the folder where you extracted cheetah
+ - to be sure you are in the right folder you can type 'dir' to get a list of the folder contents, setup.py should be listed.
+ - at the command prompt type: python setup.py install
  - if this doesn't work python may not be in your system path
 * download splinter
- - open a cmd prompt to your extract folder and type: python setup.py install
+ - extract splinter to a folder such as C:\splinter
+ - open a command prompt in the folder where you extracted splinter
+ - to be sure you are in the right folder you can type 'dir' to get a list of the folder contents, setup.py should be listed.
+ - at the command prompt type: python setup.py install
+ - if this doesn't work python may not be in your system path
 
 Next you'll need to clone this repository to your hard drive.  This will allow you to pull that very latest version any time you wish.
 If you installed tortisegit this is really easy to do:
@@ -75,6 +81,9 @@ If you installed tortisegit this is really easy to do:
 * thats it! all you have to do now is run dwarfbeard.py
 
 I doubt I've covered every detail of course but this should get you well on your way.
+
+You can email me if you need a bit of help. 
+TitaniumAutomaton@gmail.com
 
 
 ## Configuration
