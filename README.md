@@ -60,12 +60,14 @@ Here is a quick install guide to get you on your way:
  - make sure python is added to your system path.  Google it to find out how.
  - you must install python before you can install either of the next two python modules listed below
 * download cheetah template 
+ - download here: [cheetah 2.4.4][cheetahDownloads]
  - extract cheetah to a folder such as C:\cheetah
  - open a command prompt in the folder where you extracted cheetah
  - to be sure you are in the right folder you can type 'dir' to get a list of the folder contents, setup.py should be listed.
  - at the command prompt type: python setup.py install
  - if this doesn't work python may not be in your system path
 * download splinter
+ - you can download splinter as a zip file from its git hub page: [splinter][splinterDownlaods]
  - extract splinter to a folder such as C:\splinter
  - open a command prompt in the folder where you extracted splinter
  - to be sure you are in the right folder you can type 'dir' to get a list of the folder contents, setup.py should be listed.
@@ -131,8 +133,8 @@ If you find a bug please report it or it'll never get fixed. Verify that it hasn
 
 [pythonDownloads]:https://www.python.org/downloads/
 [cherryPyDownloads]:https://pypi.python.org/pypi/CherryPy/3.2.4
-[cheetahDownloads]:http://www.cheetahtemplate.org/download.html
-[splinterDownlaods]:http://splinter.cobrateam.info/docs/
+[cheetahDownloads]:https://pypi.python.org/pypi/Cheetah/2.4.4
+[splinterDownlaods]:https://github.com/cobrateam/splinter
 [fireFoxProfileManager]:https://support.mozilla.org/en-US/kb/profile-manager-create-and-remove-firefox-profiles
 [firefoxDownloads]:http://www.mozilla.org/en-US/firefox/new/
 [tortisegitHome]:https://code.google.com/p/tortoisegit/
