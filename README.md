@@ -104,7 +104,7 @@ Before running the tasks you will need to visit the config page as set up the fo
 * nw_account_name = ""
  - this is the account name you see once logged into the site: characterName@accountName
  
-Your account information is stored on your local computer in the config.ini file.
+Your account information is stored on your local computer
 
 
 Next you will need to choose your tasks.  The choice and priority is completely up to you.

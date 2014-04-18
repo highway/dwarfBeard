@@ -90,7 +90,7 @@
                         <div class="field-pair">
                             <input type="checkbox" name="launch_browser" id="launch_browser" #if $dwarfBeard.LAUNCH_BROWSER then "checked=\"checked\"" else ""#/>
                             <label class="clearfix" for="launch_browser">
-                                <span class="component-title">Launch Browser</span>
+                                <span class="component-title">Launch Browser:</span>
                                 <span class="component-desc">Should dwarfBeard open its home page when started?</span>
                             </label>
                         </div>
@@ -192,7 +192,52 @@
                     </fieldset>
                 </div><!-- /component-group2 //-->
 				<br />
-				<br />
+				
+				<div id="core-component-group2" class="component-group clearfix">
+
+					<div class="component-group-desc">
+						</br>
+                        <p>DwarfBeard Options</p>
+                    </div>
+					
+					<fieldset class="component-group-list">
+						
+						</br>
+						<div class="field-pair">
+                            <input type="checkbox" name="blackout_en" id="blackout_en" #if $dwarfBeard.BLACKOUT_EN then "checked=\"checked\"" else ""#/>
+                            <label class="clearfix" for="blackout_en">
+                                <span class="component-title">Blackout:</span>
+                                <span class="component-desc">Should dwarfBeard sleep at night?</span>
+                            </label>
+                        </div>
+						
+						<div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">Blackout Start Hour</span>
+                                <input type="text" name="blackout_start_hour" value="$dwarfBeard.BLACKOUT_START_HOUR" size="10" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">The hour in 24hour format that the black out should start</span>
+                            </label>
+                        </div>
+						
+						<div class="field-pair">
+                            <label class="nocheck clearfix">
+                                <span class="component-title">Blackout End Hour</span>
+                                <input type="text" name="blackout_end_hour" value="$dwarfBeard.BLACKOUT_END_HOUR" size="10" />
+                            </label>
+                            <label class="nocheck clearfix">
+                                <span class="component-title">&nbsp;</span>
+                                <span class="component-desc">The hour in 24hour format that the black out should end</span>
+                            </label>
+                        </div>
+						</br>
+						<input type="submit" class="btn config_submitter" value="Save Changes" />
+						
+                    </fieldset>
+                </div><!-- /component-group2 //-->
+				
 			</div><!-- /config-components -->	
 
 		</form>
@@ -206,7 +251,7 @@
 
 
                 <br />
-                <h2>Online --- The section below is under development</h2>
+                <h3>Online --- The section below is under development</h3>
                 <br />
 
 
@@ -221,7 +266,7 @@
                             <input type="checkbox" class="enabler" name="use_twitter" id="use_twitter" #if $dwarfBeard.USE_TWITTER then "checked=\"checked\"" else ""# />
                             <label class="clearfix" for="use_twitter">
                                 <span class="component-title">Enable</span>
-                                <span class="component-desc">Should Sick Beard post tweets on Twitter?</span>
+                                <span class="component-desc">Should dwarfBeard post tweets on Twitter?</span>
                             </label>
                             <label class="nocheck clearfix" for="use_twitter">
                                 <span class="component-title">&nbsp;</span>

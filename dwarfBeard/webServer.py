@@ -219,8 +219,9 @@ class Config:
 		
 	@cherrypy.expose
 	def saveGeneral(self, log_dir=None, web_port=8083, web_log=0, web_ipv6=0,
-					launch_browser=None, web_username=None, web_password=None, version_notify=None,
-					ff_profile_path=None, nw_user_name=None, nw_password=None, nw_account_name=None):
+					launch_browser=True, web_username=None, web_password=None, version_notify=None,
+					ff_profile_path=None, nw_user_name=None, nw_password=None, nw_account_name=None,
+					blackout_en=False, blackout_start_hour=22, blackout_end_hour=7):
 					
 		if launch_browser == "on":
 			launch_browser = 1
@@ -243,6 +244,15 @@ class Config:
 		dwarfBeard.NW_USER_NAME = nw_user_name
 		dwarfBeard.NW_PASSWORD = nw_password
 		dwarfBeard.NW_ACCOUNT_NAME = nw_account_name
+		
+		if blackout_en == "on":
+			blackout_en = 1
+		else:
+			blackout_en = 0
+			
+		dwarfBeard.BLACKOUT_EN = blackout_en
+		dwarfBeard.BLACKOUT_START_HOUR = blackout_start_hour
+		dwarfBeard.BLACKOUT_END_HOUR = blackout_end_hour
 		
 		dwarfBeard.save_config()
 		

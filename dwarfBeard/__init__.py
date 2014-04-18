@@ -63,6 +63,10 @@ TWITTER_PREFIX = None
 TWITTER_NOTIFY_ON_LEVELUP = None
 TWITTER_NOTIFY_ON_RARETASK = None
 
+BLACKOUT_EN = None
+BLACKOUT_START_HOUR = None
+BLACKOUT_END_HOUR = None
+
 
 taskExecRunning = 0
 
@@ -77,7 +81,7 @@ def initialize():
 
 		global runTasks, ACTUAL_LOG_DIR, LOG_DIR, WEB_PORT, WEB_LOG, WEB_ROOT, WEB_USERNAME, WEB_PASSWORD, WEB_HOST, WEB_IPV6, \
 			LAUNCH_BROWSER, FF_PROFILE_PATH, NW_USER_NAME, NW_PASSWORD, NW_ACCOUNT_NAME, taskExecRunning, USE_TWITTER, TWITTER_USERNAME, TWITTER_PASSWORD, \
-			TWITTER_PREFIX, TWITTER_NOTIFY_ON_LEVELUP, TWITTER_NOTIFY_ON_RARETASK, __INITIALIZED__
+			TWITTER_PREFIX, TWITTER_NOTIFY_ON_LEVELUP, TWITTER_NOTIFY_ON_RARETASK, BLACKOUT_EN, BLACKOUT_START_HOUR, BLACKOUT_END_HOUR, __INITIALIZED__
 
 		if __INITIALIZED__:
 			return False
@@ -117,6 +121,10 @@ def initialize():
 		TWITTER_NOTIFY_ON_LEVELUP = bool(check_setting_int(CFG, 'General', 'twitter_notify_on_levelup', 0))
 		TWITTER_NOTIFY_ON_RARETASK = bool(check_setting_int(CFG, 'General', 'twitter_notify_on_raretask', 0))
 		
+		BLACKOUT_EN = bool(check_setting_int(CFG, 'General', 'blackout_en', 0))
+		BLACKOUT_START_HOUR = check_setting_int(CFG, 'General', 'blackout_start_hour', 0)
+		BLACKOUT_END_HOUR = check_setting_int(CFG, 'General', 'blackout_end_hour', 0)
+		
 		if not os.path.isfile(CONFIG_FILE):
 			print "Unable to find '" + CONFIG_FILE + "', all settings will be default!"
 			save_config()
@@ -152,6 +160,9 @@ def save_config():
 	new_config['General']['twitter_prefix'] = TWITTER_PREFIX
 	new_config['General']['twitter_notify_on_levelup'] = TWITTER_NOTIFY_ON_LEVELUP
 	new_config['General']['twitter_notify_on_raretask'] = TWITTER_NOTIFY_ON_RARETASK
+	new_config['General']['blackout_en'] = BLACKOUT_EN
+	new_config['General']['blackout_start_hour'] = BLACKOUT_START_HOUR
+	new_config['General']['blackout_end_hour'] = BLACKOUT_END_HOUR
 	new_config.write()
 	
 	

@@ -201,14 +201,28 @@ def main():
 	#this is how we will control the time between profession jobs
 	taskActionTimer = TaskTimer(1, executeTaskActionList)
 	
+	#create a bool for use during blackout hours
+	#this is to simulate the user getting some sleep
+	blackoutActive = False
+	blackoutActiveLastScan = False #used for edge detection
 	
 	#here is the run loop
 	while True:
 
+		#decide if the current local time is within the black out time
+		blackoutActive = ((time.localtime()[3] >= int(dwarfBeard.BLACKOUT_START_HOUR)) or (time.localtime()[3] < int(dwarfBeard.BLACKOUT_END_HOUR))) and dwarfBeard.BLACKOUT_EN
+		
+		#signal when black out becomes active
+		if blackoutActive and not blackoutActiveLastScan:
+			print 'Blackout just became active @', time.localtime()[3]
+		elif blackoutActiveLastScan and not blackoutActive:
+			print 'Blackout just ended @', time.localtime()[3]
+			
+		
 		#when we get the runTasks signal start the task timer 
 		#if its not already running
 		#if task collection is in progress the timer will not be running
-		if dwarfBeard.runTasks:
+		if dwarfBeard.runTasks and not blackoutActive:
 			if not (taskActionTimer.running or dwarfBeard.taskExecRunning):
 				print 'starting task timer'
 				#set a default interval. this will be reset by the log out function
@@ -216,8 +230,16 @@ def main():
 				taskActionTimer.start()
 		else:
 			if taskActionTimer.running:
-				print 'stopping task timer'
+				if blackoutActive:
+					print 'stopping task timer during blackout period'
+				else:
+					print 'stopping task timer'
 				taskActionTimer.stop()
+		
+		
+		
+		#set any vars for edge detection
+		blackoutActiveLastScan = blackoutActive
 		
 		#sleep at the end of each scan so processor time is not consumed
 		time.sleep(1.0)
